@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="bfef587b-7112-4d75-addc-fae1ff057268" name="etu-web2" url="http://localhost/~21912824/phpProject_GroupeK">
+        <fileTransfer rootFolder="/espace/21912824/public_html" accessType="SFTP" host="etu-web2.ut-capitole.fr" port="22" sshConfigId="06ba1712-5ecd-4f3f-adfe-3c054e8be571" sshConfig="21912824@etu-web2.ut-capitole.fr:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
