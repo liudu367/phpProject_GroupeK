@@ -28,9 +28,12 @@ echo "
       <li><a href='#' class='nav-link px-2 link-dark'>About</a></li>
     </ul>
 
-    <div class='col-md-3 text-end'>
-      <button type='button' class='btn btn-outline-primary me-2'>Login</button>
-      <button type='button' class='btn btn-primary'>Sign-up</button>
+    <div class='col-md-3 text-end'>";
+
+if (isset($_SESSION['password'])) {
+    echo "Bienvenue"." ".$_SESSION['username'];
+}
+echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
     </div>
   </header>
 </div> 
