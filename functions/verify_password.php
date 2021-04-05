@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('../class/People/people.php');
+require_once('../class/People/people.php');
 
 use People\people;
 

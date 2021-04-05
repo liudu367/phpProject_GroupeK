@@ -1,5 +1,16 @@
 <?php
 session_start();
+include('./class/People/people.php');
+$conn = require_once('./functions/connection_db.php');
+
+if (isset($_SESSION['password']) == false) {
+    header('location:login.php');
+}
+
+use People\people;
+
+$person = new people();
+$person->setAll($conn, $_SESSION['username']);
 
 echo "
 <!DOCTYPE>
@@ -31,7 +42,7 @@ echo "
     <div class='col-md-3 text-end'>";
 
 if (isset($_SESSION['password'])) {
-    echo "Bienvenue"." ".$_SESSION['username'];
+    echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
 }
 echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
     </div>
