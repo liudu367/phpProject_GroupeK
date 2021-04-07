@@ -1,4 +1,5 @@
 <?php
+
 namespace People;
 
 class people
@@ -31,6 +32,14 @@ class people
         return $this->email;
     }
 
+
+    public function getClass()
+    {
+
+        return $this->class;
+    }
+
+
     public function setAll($conn, $username)
     {
         mysqli_select_db($conn, 'db_21912824_2');
@@ -47,8 +56,6 @@ class people
                 $this->nom = $rows[5];
             }
         }
-
-
     }
 
     public function verifyPassword($conn, $user, $pwd)
@@ -64,12 +71,24 @@ class people
                     return false;
                 }
             }
-
         } else {
             return false;
         }
     }
 
-
+    public function getCourses($conn, $email)
+    {
+        mysqli_select_db($conn, 'db_21912824_2');
+        $query = "select DISTINCTROW php_course.name_cours
+        from php_users,php_register,php_promotion,php_course
+        where php_users.code_user=php_register.code_user
+        and php_register.code_promo=php_promotion.code_promo
+        and php_promotion.code_promo=php_course.code_promo
+        and php_users.email_user='$email'";
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+    }
 }
 

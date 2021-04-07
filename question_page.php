@@ -11,8 +11,10 @@ use People\people;
 
 $person = new people();
 $person->setAll($conn, $_SESSION['username']);
-
-echo "
+//the navigate bar
+// if the user is student
+if ($person->getClass() == 3) {
+    echo "
 <!DOCTYPE>
 <html lang='fr'>
 <head>
@@ -41,10 +43,11 @@ echo "
 
     <div class='col-md-3 text-end'>";
 
+// the login status
 if (isset($_SESSION['password'])) {
     echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
 }
-echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
+    echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
     </div>
   </header>
   
@@ -53,8 +56,9 @@ echo " <a href='functions/disconnection.php' style='color: white'><button type='
       <div class='col-md-7 col-lg-8'>
         <h4 class='mb-3'>Question</h4>
         <form action='functions' method='post' class='needs-validation' novalidate=''>
-          <div class='row g-3'>
-          
+          <div class='row g-3'>";
+
+    echo "
           <div class='col-12'>
               <label for='title' class='form-label'>Titre</label>
               <input type='text' class='form-control' id='title' name='title_que' placeholder='Titre de votre question' required>
@@ -71,23 +75,24 @@ echo " <a href='functions/disconnection.php' style='color: white'><button type='
               </div>
             </div>";
 
-echo " 
-            <div class='col-12'>
-              <label for='address2' class='form-label'>Address 2 <span class='text-muted'>(Optional)</span></label>
-              <input type='text' class='form-control' id='address2' placeholder='Apartment or suite'>
-            </div>
+    echo "     <div class='col-md-5'>
+              <label for='course' class='form-label'>Country</label>
+              <select class='form-select' id='course' name='name_cours' required>
+                <option value=''>Choose...</option>";
 
-            <div class='col-md-5'>
-              <label for='country' class='form-label'>Country</label>
-              <select class='form-select' id='country' required=''>
-                <option value=''>Choose...</option>
-                <option>United States</option>
-              </select>
-              <div class='invalid-feedback'>
-                Please select a valid country.
+    $result = $person->getCourses($conn, $person->getEmail());
+    if ($result->num_rows > 0) {
+        while ($rows = $result->fetch_row()) {
+            echo "<option value='$rows[0]'>".$rows[0]."</option>";
+        }
+    }
+    echo "</select>";
+    echo "        <div class='invalid-feedback'>
+                Please select a cours
               </div>
-            </div>
+            </div>";
 
+    echo "
             <div class='col-md-4'>
               <label for='state' class='form-label'>State</label>
               <select class='form-select' id='state' required=''>
@@ -110,19 +115,8 @@ echo "
 
           <hr class='my-4'>
 
-          <div class='form-check'>
-            <input type='checkbox' class='form-check-input' id='same-address'>
-            <label class='form-check-label' for='same-address'>Shipping address is the same as my billing address</label>
-          </div>
-
-          <div class='form-check'>
-            <input type='checkbox' class='form-check-input' id='save-info'>
-            <label class='form-check-label' for='save-info'>Save this information for next time</label>
-          </div>
-
           <hr class='my-4'>
 
-        
           <button class='w-100 btn btn-primary btn-lg' type='submit'>Poser La Question</button>
         </form>
       </div>
@@ -134,5 +128,18 @@ echo "
 
 
 
+
+
+
+
 </body>
 </html>";
+} else {
+
+    echo "vous n'avez pas le droit de poser des questions";
+}
+
+
+//select DISTINCTROW t.email_user
+//from (select DISTINCTROW php_course.name_cours,php_course.type_cours,p2.email_user from php_users p1,php_register,php_promotion,php_course, php_users p2 where p1.code_user=php_register.code_user and php_register.code_promo=php_promotion.code_promo and php_promotion.code_promo=php_course.code_promo and p1.email_user='mengying.zhao@ut-capitole.fr' and php_course.code_prof = p2.code_user and php_course.name_cours='Programmation structuree'  union
+//select DISTINCTROW php_course.name_cours,php_course.type_cours,p2.email_user from php_users p1,php_register,php_promotion,php_course, php_users p2 where p1.code_user=php_register.code_user and php_register.code_promo=php_promotion.code_promo and php_promotion.code_promo=php_course.code_promo and p1.email_user='mengying.zhao@ut-capitole.fr' and php_course.code_cours_respon = p2.code_user and php_course.name_cours='Programmation structuree') as t
