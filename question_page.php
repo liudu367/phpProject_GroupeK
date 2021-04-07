@@ -14,8 +14,8 @@ $person->setAll($conn, $_SESSION['username']);
 //the navigate bar
 // if the user is student
 if ($person->getClass() == 3) {
-    echo "
-<!DOCTYPE>
+
+    echo "<!DOCTYPE>
 <html lang='fr'>
 <head>
     <meta charset='UTF-8'>
@@ -25,6 +25,14 @@ if ($person->getClass() == 3) {
     <link rel='stylesheet' href='./css/bootstrap.min.css'>
     <script src='./js/bootstrap.js'></script>
     <script src='./js/bootstrap.min.js'></script>
+    <script type='text/javascript'>
+    var readpoint =";
+    echo $person->getJSONCourses($conn).";";
+
+    echo "alert(readpoint[0][0]);";
+
+    echo "
+    </script>
 </head>
 <body>
 <div class='container'>
@@ -80,6 +88,7 @@ if (isset($_SESSION['password'])) {
               <select class='form-select' id='course' name='name_cours' required>
                 <option value=''>Choose...</option>";
 
+
     $result = $person->getCourses($conn, $person->getEmail());
     if ($result->num_rows > 0) {
         while ($rows = $result->fetch_row()) {
@@ -123,23 +132,11 @@ if (isset($_SESSION['password'])) {
     </div>
 </main>
 </div> 
-
-
-
-
-
-
-
-
-
 </body>
 </html>";
+
+
 } else {
 
     echo "vous n'avez pas le droit de poser des questions";
 }
-
-
-//select DISTINCTROW t.email_user
-//from (select DISTINCTROW php_course.name_cours,php_course.type_cours,p2.email_user from php_users p1,php_register,php_promotion,php_course, php_users p2 where p1.code_user=php_register.code_user and php_register.code_promo=php_promotion.code_promo and php_promotion.code_promo=php_course.code_promo and p1.email_user='mengying.zhao@ut-capitole.fr' and php_course.code_prof = p2.code_user and php_course.name_cours='Programmation structuree'  union
-//select DISTINCTROW php_course.name_cours,php_course.type_cours,p2.email_user from php_users p1,php_register,php_promotion,php_course, php_users p2 where p1.code_user=php_register.code_user and php_register.code_promo=php_promotion.code_promo and php_promotion.code_promo=php_course.code_promo and p1.email_user='mengying.zhao@ut-capitole.fr' and php_course.code_cours_respon = p2.code_user and php_course.name_cours='Programmation structuree') as t
