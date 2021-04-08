@@ -1,8 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="db_21912824_2@localhost">
-  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.20">
+  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.21">
     <root id="1">
       <ServerVersion>5.5.68</ServerVersion>
+      <Grants>db_21912824|schema||21912824|localhost|ALTER|G
+db_21912824|schema||21912824|localhost|ALTER ROUTINE|G
+db_21912824|schema||21912824|localhost|CREATE|G
+db_21912824|schema||21912824|localhost|CREATE ROUTINE|G
+db_21912824|schema||21912824|localhost|CREATE TEMPORARY TABLES|G
+db_21912824|schema||21912824|localhost|CREATE VIEW|G
+db_21912824|schema||21912824|localhost|DELETE|G
+db_21912824|schema||21912824|localhost|DROP|G
+db_21912824|schema||21912824|localhost|EVENT|G
+db_21912824|schema||21912824|localhost|EXECUTE|G
+db_21912824|schema||21912824|localhost|INDEX|G
+db_21912824|schema||21912824|localhost|INSERT|G
+db_21912824|schema||21912824|localhost|LOCK TABLES|G
+db_21912824|schema||21912824|localhost|REFERENCES|G
+db_21912824|schema||21912824|localhost|SELECT|G
+db_21912824|schema||21912824|localhost|SHOW VIEW|G
+db_21912824|schema||21912824|localhost|TRIGGER|G
+db_21912824|schema||21912824|localhost|UPDATE|G
+db_21912824|schema||21912824|localhost|grant option|G
+db_21912824_2|schema||21912824|localhost|ALTER|G
+db_21912824_2|schema||21912824|localhost|ALTER ROUTINE|G
+db_21912824_2|schema||21912824|localhost|CREATE|G
+db_21912824_2|schema||21912824|localhost|CREATE ROUTINE|G
+db_21912824_2|schema||21912824|localhost|CREATE TEMPORARY TABLES|G
+db_21912824_2|schema||21912824|localhost|CREATE VIEW|G
+db_21912824_2|schema||21912824|localhost|DELETE|G
+db_21912824_2|schema||21912824|localhost|DROP|G
+db_21912824_2|schema||21912824|localhost|EVENT|G
+db_21912824_2|schema||21912824|localhost|EXECUTE|G
+db_21912824_2|schema||21912824|localhost|INDEX|G
+db_21912824_2|schema||21912824|localhost|INSERT|G
+db_21912824_2|schema||21912824|localhost|LOCK TABLES|G
+db_21912824_2|schema||21912824|localhost|REFERENCES|G
+db_21912824_2|schema||21912824|localhost|SELECT|G
+db_21912824_2|schema||21912824|localhost|SHOW VIEW|G
+db_21912824_2|schema||21912824|localhost|TRIGGER|G
+db_21912824_2|schema||21912824|localhost|UPDATE|G
+db_21912824_2|schema||21912824|localhost|grant option|G</Grants>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
       <DefaultCasing>exact</DefaultCasing>
@@ -664,9 +702,6 @@
     </collation>
     <user id="207" parent="1" name="21912824">
       <Host>localhost</Host>
-      <ObjectGrants>ALL PRIVILEGES|db_21912824_2!
-ALL PRIVILEGES|db_21912824!
-</ObjectGrants>
     </user>
     <table id="208" parent="3" name="activites"/>
     <table id="209" parent="3" name="choix_activites"/>
@@ -680,7 +715,7 @@ ALL PRIVILEGES|db_21912824!
     <table id="215" parent="3" name="php_demand">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="216" parent="3" name="php_promotion">
+    <table id="216" parent="3" name="php_groups">
       <Collation>utf8_general_ci</Collation>
     </table>
     <table id="217" parent="3" name="php_question">
@@ -1001,7 +1036,7 @@ CODCONGRES</ColNames>
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="288" parent="214" name="code_promo">
+    <column id="288" parent="214" name="code_gp">
       <Position>8</Position>
       <DataType>varchar(11)|0s</DataType>
     </column>
@@ -1014,7 +1049,7 @@ CODCONGRES</ColNames>
       <Type>btree</Type>
     </index>
     <index id="291" parent="214" name="fk_course_promotion">
-      <ColNames>code_promo</ColNames>
+      <ColNames>code_gp</ColNames>
       <Type>btree</Type>
     </index>
     <key id="292" parent="214" name="PRIMARY">
@@ -1033,9 +1068,9 @@ CODCONGRES</ColNames>
       <RefColNames>code_user</RefColNames>
     </foreign-key>
     <foreign-key id="295" parent="214" name="fk_course_promotion">
-      <ColNames>code_promo</ColNames>
-      <RefTableName>php_promotion</RefTableName>
-      <RefColNames>code_promo</RefColNames>
+      <ColNames>code_gp</ColNames>
+      <RefTableName>php_groups</RefTableName>
+      <RefColNames>code_gp</RefColNames>
     </foreign-key>
     <column id="296" parent="215" name="code_dem">
       <Position>1</Position>
@@ -1096,16 +1131,16 @@ CODCONGRES</ColNames>
       <RefTableName>php_users</RefTableName>
       <RefColNames>code_user</RefColNames>
     </foreign-key>
-    <column id="309" parent="216" name="code_promo">
+    <column id="309" parent="216" name="code_gp">
       <Position>1</Position>
       <DataType>varchar(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="310" parent="216" name="sem_promo">
+    <column id="310" parent="216" name="sem_gp">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <column id="311" parent="216" name="name_promo">
+    <column id="311" parent="216" name="namepromo_gp">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
     </column>
@@ -1114,16 +1149,16 @@ CODCONGRES</ColNames>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="313" parent="216" name="fk_promotion_secretariat">
+    <index id="313" parent="216" name="fk_groups_secretariat">
       <ColNames>code_sec</ColNames>
       <Type>btree</Type>
     </index>
     <key id="314" parent="216" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>code_promo</ColNames>
+      <ColNames>code_gp</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="315" parent="216" name="fk_promotion_secretariat">
+    <foreign-key id="315" parent="216" name="fk_groups_secretariat">
       <ColNames>code_sec</ColNames>
       <RefTableName>php_secretariat</RefTableName>
       <RefColNames>code_sec</RefColNames>
@@ -1151,9 +1186,9 @@ CODCONGRES</ColNames>
       <Position>5</Position>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <column id="321" parent="217" name="code_cours">
+    <column id="321" parent="217" name="name_cours">
       <Position>6</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="322" parent="217" name="code_user">
@@ -1165,313 +1200,304 @@ CODCONGRES</ColNames>
       <Position>8</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <index id="324" parent="217" name="fk_question_course">
-      <ColNames>code_cours</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="325" parent="217" name="fk_question_users">
+    <index id="324" parent="217" name="fk_question_users">
       <ColNames>code_user</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="326" parent="217" name="PRIMARY">
+    <key id="325" parent="217" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code_que</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="327" parent="217" name="fk_question_course">
-      <ColNames>code_cours</ColNames>
-      <RefTableName>php_course</RefTableName>
-      <RefColNames>code_cours</RefColNames>
-    </foreign-key>
-    <foreign-key id="328" parent="217" name="fk_question_users">
+    <foreign-key id="326" parent="217" name="fk_question_users">
       <ColNames>code_user</ColNames>
       <RefTableName>php_users</RefTableName>
       <RefColNames>code_user</RefColNames>
     </foreign-key>
-    <column id="329" parent="218" name="code_promo">
+    <column id="327" parent="218" name="code_gp">
       <Position>1</Position>
       <DataType>varchar(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="330" parent="218" name="code_user">
+    <column id="328" parent="218" name="code_user">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="331" parent="218" name="fk_register_users">
+    <index id="329" parent="218" name="fk_register_users">
       <ColNames>code_user</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="332" parent="218" name="PRIMARY">
+    <key id="330" parent="218" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>code_promo
+      <ColNames>code_gp
 code_user</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="333" parent="218" name="fk_register_promotion">
-      <ColNames>code_promo</ColNames>
-      <RefTableName>php_promotion</RefTableName>
-      <RefColNames>code_promo</RefColNames>
+    <foreign-key id="331" parent="218" name="fk_register_groups">
+      <ColNames>code_gp</ColNames>
+      <RefTableName>php_groups</RefTableName>
+      <RefColNames>code_gp</RefColNames>
     </foreign-key>
-    <foreign-key id="334" parent="218" name="fk_register_users">
+    <foreign-key id="332" parent="218" name="fk_register_users">
       <ColNames>code_user</ColNames>
       <RefTableName>php_users</RefTableName>
       <RefColNames>code_user</RefColNames>
     </foreign-key>
-    <column id="335" parent="219" name="code_re">
+    <column id="333" parent="219" name="code_re">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="336" parent="219" name="title_re">
+    <column id="334" parent="219" name="title_re">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="337" parent="219" name="content_re">
+    <column id="335" parent="219" name="content_re">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="338" parent="219" name="dt_re">
+    <column id="336" parent="219" name="dt_re">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="339" parent="219" name="father_id">
+    <column id="337" parent="219" name="father_id">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="340" parent="219" name="code_que">
+    <column id="338" parent="219" name="code_que">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="341" parent="219" name="code_user">
+    <column id="339" parent="219" name="code_user">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="342" parent="219" name="uptime_re">
+    <column id="340" parent="219" name="uptime_re">
       <Position>8</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <index id="343" parent="219" name="fk_response_question">
+    <index id="341" parent="219" name="fk_response_question">
       <ColNames>code_que</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="344" parent="219" name="fk_response_users">
+    <index id="342" parent="219" name="fk_response_users">
       <ColNames>code_user</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="345" parent="219" name="PRIMARY">
+    <key id="343" parent="219" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code_re</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="346" parent="219" name="fk_response_question">
+    <foreign-key id="344" parent="219" name="fk_response_question">
       <ColNames>code_que</ColNames>
       <RefTableName>php_question</RefTableName>
       <RefColNames>code_que</RefColNames>
     </foreign-key>
-    <foreign-key id="347" parent="219" name="fk_response_users">
+    <foreign-key id="345" parent="219" name="fk_response_users">
       <ColNames>code_user</ColNames>
       <RefTableName>php_users</RefTableName>
       <RefColNames>code_user</RefColNames>
     </foreign-key>
-    <column id="348" parent="220" name="code_sec">
+    <column id="346" parent="220" name="code_sec">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="349" parent="220" name="nom_sec">
+    <column id="347" parent="220" name="nom_sec">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <key id="350" parent="220" name="PRIMARY">
+    <key id="348" parent="220" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code_sec</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="351" parent="221" name="code_user">
+    <column id="349" parent="221" name="code_user">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="352" parent="221" name="class_user">
+    <column id="350" parent="221" name="class_user">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="353" parent="221" name="pwd_user">
+    <column id="351" parent="221" name="pwd_user">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="354" parent="221" name="email_user">
+    <column id="352" parent="221" name="email_user">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="355" parent="221" name="fn_user">
+    <column id="353" parent="221" name="fn_user">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="356" parent="221" name="ln_user">
+    <column id="354" parent="221" name="ln_user">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="357" parent="221" name="code_sec">
+    <column id="355" parent="221" name="code_sec">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <index id="358" parent="221" name="fk_users_secretariat">
+    <index id="356" parent="221" name="fk_users_secretariat">
       <ColNames>code_sec</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="359" parent="221" name="PRIMARY">
+    <key id="357" parent="221" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code_user</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="360" parent="221" name="fk_users_secretariat">
+    <foreign-key id="358" parent="221" name="fk_users_secretariat">
       <ColNames>code_sec</ColNames>
       <RefTableName>php_secretariat</RefTableName>
       <RefColNames>code_sec</RefColNames>
     </foreign-key>
-    <column id="361" parent="222" name="CODEACTIVITE">
+    <column id="359" parent="222" name="CODEACTIVITE">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="362" parent="222" name="CODCONGRES">
+    <column id="360" parent="222" name="CODCONGRES">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="363" parent="222" name="I_FK_PROPOSER_ACTIVITES">
+    <index id="361" parent="222" name="I_FK_PROPOSER_ACTIVITES">
       <ColNames>CODEACTIVITE</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="364" parent="222" name="I_FK_PROPOSER_CONGRES">
+    <index id="362" parent="222" name="I_FK_PROPOSER_CONGRES">
       <ColNames>CODCONGRES</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="365" parent="222" name="PRIMARY">
+    <key id="363" parent="222" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CODEACTIVITE
 CODCONGRES</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="366" parent="222" name="proposer_ibfk_1">
+    <foreign-key id="364" parent="222" name="proposer_ibfk_1">
       <ColNames>CODEACTIVITE</ColNames>
       <RefTableName>activites</RefTableName>
       <RefColNames>CODEACTIVITE</RefColNames>
     </foreign-key>
-    <foreign-key id="367" parent="222" name="proposer_ibfk_2">
+    <foreign-key id="365" parent="222" name="proposer_ibfk_2">
       <ColNames>CODCONGRES</ColNames>
       <RefTableName>congres</RefTableName>
       <RefColNames>CODCONGRES</RefColNames>
     </foreign-key>
-    <column id="368" parent="223" name="CODESTATUT">
+    <column id="366" parent="223" name="CODESTATUT">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="369" parent="223" name="NOMSTATUT">
+    <column id="367" parent="223" name="NOMSTATUT">
       <Position>2</Position>
       <DataType>char(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="370" parent="223" name="PRIMARY">
+    <key id="368" parent="223" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CODESTATUT</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="371" parent="224" name="CODESTATUT">
+    <column id="369" parent="224" name="CODESTATUT">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="372" parent="224" name="CODCONGRES">
+    <column id="370" parent="224" name="CODCONGRES">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="373" parent="224" name="MONTANTTARIF">
+    <column id="371" parent="224" name="MONTANTTARIF">
       <Position>3</Position>
       <DataType>decimal(13,2 digit)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="374" parent="224" name="I_FK_TARIFS_STATUTS">
+    <index id="372" parent="224" name="I_FK_TARIFS_STATUTS">
       <ColNames>CODESTATUT</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="375" parent="224" name="I_FK_TARIFS_CONGRES">
+    <index id="373" parent="224" name="I_FK_TARIFS_CONGRES">
       <ColNames>CODCONGRES</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="376" parent="224" name="PRIMARY">
+    <key id="374" parent="224" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CODESTATUT
 CODCONGRES</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="377" parent="224" name="tarifs_ibfk_1">
+    <foreign-key id="375" parent="224" name="tarifs_ibfk_1">
       <ColNames>CODESTATUT</ColNames>
       <RefTableName>statuts</RefTableName>
       <RefColNames>CODESTATUT</RefColNames>
     </foreign-key>
-    <foreign-key id="378" parent="224" name="tarifs_ibfk_2">
+    <foreign-key id="376" parent="224" name="tarifs_ibfk_2">
       <ColNames>CODCONGRES</ColNames>
       <RefTableName>congres</RefTableName>
       <RefColNames>CODCONGRES</RefColNames>
     </foreign-key>
-    <column id="379" parent="225" name="CODETHEMATIQUE">
+    <column id="377" parent="225" name="CODETHEMATIQUE">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="380" parent="225" name="NOMTHEMATIQUE">
+    <column id="378" parent="225" name="NOMTHEMATIQUE">
       <Position>2</Position>
       <DataType>char(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="381" parent="225" name="PRIMARY">
+    <key id="379" parent="225" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CODETHEMATIQUE</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="382" parent="226" name="CODCONGRES">
+    <column id="380" parent="226" name="CODCONGRES">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="383" parent="226" name="CODETHEMATIQUE">
+    <column id="381" parent="226" name="CODETHEMATIQUE">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="384" parent="226" name="I_FK_TRAITER_CONGRES">
+    <index id="382" parent="226" name="I_FK_TRAITER_CONGRES">
       <ColNames>CODCONGRES</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="385" parent="226" name="I_FK_TRAITER_THEMATIQUES">
+    <index id="383" parent="226" name="I_FK_TRAITER_THEMATIQUES">
       <ColNames>CODETHEMATIQUE</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="386" parent="226" name="PRIMARY">
+    <key id="384" parent="226" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CODCONGRES
 CODETHEMATIQUE</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="387" parent="226" name="traiter_ibfk_1">
+    <foreign-key id="385" parent="226" name="traiter_ibfk_1">
       <ColNames>CODCONGRES</ColNames>
       <RefTableName>congres</RefTableName>
       <RefColNames>CODCONGRES</RefColNames>
     </foreign-key>
-    <foreign-key id="388" parent="226" name="traiter_ibfk_2">
+    <foreign-key id="386" parent="226" name="traiter_ibfk_2">
       <ColNames>CODETHEMATIQUE</ColNames>
       <RefTableName>thematiques</RefTableName>
       <RefColNames>CODETHEMATIQUE</RefColNames>

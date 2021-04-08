@@ -26,12 +26,22 @@ if ($person->getClass() == 3) {
     <script src='./js/bootstrap.js'></script>
     <script src='./js/bootstrap.min.js'></script>
     <script type='text/javascript'>
-    var readpoint =";
+    var data =";
     echo $person->getJSONCourses($conn).";";
-
-    echo "alert(readpoint[0][0]);";
-
-    echo "
+    echo " 
+      function selectProfessor(){
+      var source = document.getElementById('course');
+      var target = document.getElementById('prof');
+      var selected = source.options[source.selectedIndex].value;
+      target.innerHTML='';
+      for (var i= 0; i < data[selected].length;i++){
+           var opt = document.createElement('option');
+               opt.value = data[selected][i];
+               opt.innerHTML = data[selected][i];
+               document.getElementById('prof').appendChild(opt);
+               
+      }      
+      } 
     </script>
 </head>
 <body>
@@ -52,9 +62,9 @@ if ($person->getClass() == 3) {
     <div class='col-md-3 text-end'>";
 
 // the login status
-if (isset($_SESSION['password'])) {
-    echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
-}
+    if (isset($_SESSION['password'])) {
+        echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+    }
     echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
     </div>
   </header>
@@ -84,36 +94,39 @@ if (isset($_SESSION['password'])) {
             </div>";
 
     echo "     <div class='col-md-5'>
-              <label for='course' class='form-label'>Country</label>
-              <select class='form-select' id='course' name='name_cours' required>
-                <option value=''>Choose...</option>";
+              <label for='course' class='form-label'>Cours</label>
+              <select class='form-select' id='course' name='name_cours' onchange='selectProfessor()' required>
+                <option value=''>Choisir...</option>";
 
-
-    $result = $person->getCourses($conn, $person->getEmail());
-    if ($result->num_rows > 0) {
-        while ($rows = $result->fetch_row()) {
-            echo "<option value='$rows[0]'>".$rows[0]."</option>";
-        }
+    $index = array_keys(json_decode($person->getJSONCourses($conn), true));
+//    $result = $person->getCourses($conn, $person->getEmail());
+//    if ($result->num_rows > 0) {
+//        while ($rows = $result->fetch_row()) {
+    foreach ($index as $v) {
+        echo "<option value='$v'>".$v."</option>";
     }
+
+///}
+    //   }
     echo "</select>";
     echo "        <div class='invalid-feedback'>
-                Please select a cours
+                Veuillez sélectionner un cours
               </div>
             </div>";
 
     echo "
             <div class='col-md-4'>
-              <label for='state' class='form-label'>State</label>
-              <select class='form-select' id='state' required=''>
-                <option value=''>Choose...</option>
+              <label for='prof' class='form-label'>Professeur</label>
+              <select class='form-select' id='prof' name='name_prof' required>
+                <option value=''>Choisir...</option>
                 <option>California</option>
               </select>
               <div class='invalid-feedback'>
-                Please provide a valid state.
+                Veuillez choisir un professeur
               </div>
             </div>
 
-            <div class='col-md-3'>
+            <div class='col-md-3' hidden>
               <label for='zip' class='form-label'>Zip</label>
               <input type='text' class='form-control' id='zip' placeholder='' required=''>
               <div class='invalid-feedback'>
@@ -134,8 +147,6 @@ if (isset($_SESSION['password'])) {
 </div> 
 </body>
 </html>";
-
-
 } else {
 
     echo "vous n'avez pas le droit de poser des questions";

@@ -6,11 +6,11 @@ use People\people;
 
 $person = new people();
 $conn = require_once('connection_db.php');
-if ($person->verifyPassword($conn, $_POST['username'], $_POST['password'])
-    == true
-) {
-    $_SESSION['username'] = $_POST['username'];
-    $_SESSION['password'] = $_POST['password'];
+$user = $_POST['username'];
+$pwd = $_POST['password'];
+if ($person->verifyPassword($conn, $user, $pwd) == true) {
+    $_SESSION['username'] = $user;
+    $_SESSION['password'] = $pwd;
     header('location:../index.php');
 } else {
     header('location:../login.php');

@@ -58,14 +58,15 @@ class people
         }
     }
 
-    public function verifyPassword($conn, $user, $pwd)
+    public function verifyPassword($conn, $username, $pwd)
     {
         mysqli_select_db($conn, 'db_21912824_2');
-        $query = "select pwd_user from php_users where email_user='$user'";
+        $query
+            = "select code_user, class_user, pwd_user, email_user, fn_user, ln_user from php_users  where email_user='$username'";
         $result = mysqli_query($conn, $query);
         if ($result->num_rows > 0) {
             while ($rows = $result->fetch_row()) {
-                if ($rows[0] = $pwd) {
+                if ($rows[2] == $pwd) {
                     return true;
                 } else {
                     return false;
@@ -74,6 +75,7 @@ class people
         } else {
             return false;
         }
+
     }
 
     public function getCourses($conn, $email)
@@ -96,7 +98,7 @@ class people
     public function getJSONCourses($conn)
     {
         mysqli_select_db($conn, 'db_21912824_2');
-        $query = "select DISTINCT php_users.email_user, php_course.name_cours,php_course.type_cours,php_course.code_gp,pu1.email_user
+        $query = "select DISTINCT php_course.name_cours
                     from php_users,php_register,php_groups,php_course,php_users pu1
                     where php_users.code_user=php_register.code_user
                     and php_register.code_gp=php_groups.code_gp
@@ -105,11 +107,30 @@ class people
                     and php_course.code_prof = pu1.code_user";
         $result = mysqli_query($conn, $query);
         while ($rows = $result->fetch_row()) {
-            $select[] = array($rows[1], $rows[4]);
+            $g = $rows[0];
+            $data[$g] = array();
+
+        }
+        $index = array_keys($data);
+        $query = "select DISTINCT php_course.name_cours,pu1.email_user
+                    from php_users,php_register,php_groups,php_course,php_users pu1
+                    where php_users.code_user=php_register.code_user
+                    and php_register.code_gp=php_groups.code_gp
+                    and php_groups.code_gp=php_course.code_gp
+                    and php_users.email_user='$this->email'
+                    and php_course.code_prof = pu1.code_user";
+        $result = mysqli_query($conn, $query);
+        while ($rows = $result->fetch_row()) {
+            foreach ($index as $v) {
+                if ($rows[0] == $v) {
+                    $data[$v][] = $rows[1];
+                }
+            }
         }
 
-        return json_encode($select);
+        return json_encode($data);
     }
 }
+//
 
 
