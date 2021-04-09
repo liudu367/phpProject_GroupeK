@@ -109,12 +109,21 @@ class people
         while ($rows = $result->fetch_row()) {
             $g = $rows[0];
             $data[$g] = array();
-
         }
+        $data["La vie universitaire"] = array();
+        $data["Les questions administratives"] = array();
         $index = array_keys($data);
         $query = "select DISTINCT php_course.name_cours,pu1.email_user
                     from php_users,php_register,php_groups,php_course,php_users pu1
-                    where php_users.code_user=php_register.code_user
+                    WHERE php_users.code_user=php_register.code_user
+                    and php_register.code_gp=php_groups.code_gp
+                    and php_groups.code_gp=php_course.code_gp
+                    and php_users.email_user='$this->email'
+                    and php_course.code_cours_respon = pu1.code_user
+                    UNION
+                  select DISTINCT php_course.name_cours,pu1.email_user
+                    from php_users,php_register,php_groups,php_course,php_users pu1
+                    WHERE php_users.code_user=php_register.code_user
                     and php_register.code_gp=php_groups.code_gp
                     and php_groups.code_gp=php_course.code_gp
                     and php_users.email_user='$this->email'
@@ -126,6 +135,25 @@ class people
                     $data[$v][] = $rows[1];
                 }
             }
+        }
+        $query = "select DISTINCTROW pu1.email_user
+                    from php_users, php_register,php_groups,php_secretariat,php_users pu1
+                    where 
+                    php_users.email_user='$this->email'
+                    and php_users.code_user=php_register.code_user
+                    and php_register.code_gp = php_groups.code_gp
+                    and php_groups.code_sec=php_secretariat.code_sec
+                    and pu1.code_sec = php_secretariat.code_sec";
+        $result = mysqli_query($conn, $query);
+        while ($rows = $result->fetch_row()) {
+            foreach ($index as $v) {
+                if ($v == "La vie universitaire" or $v
+                    == "Les questions administratives"
+                ) {
+                    $data[$v][] = $rows[0];
+                }
+            }
+
         }
 
         return json_encode($data);

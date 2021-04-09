@@ -47,6 +47,30 @@ if (isset($_SESSION['password'])) {
 echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
     </div>
   </header>
+  <div class='container py-5' id = 'Course'>
+  <h2 class='pb-2 border-bottom' > Thread </h2 >
+       <div class='row row-cols-4 g-4 py-5' >
+  ";
+
+if ($person->getClass() == 3) {
+    $index = array_keys(json_decode($person->getJSONCourses($conn), true));
+    foreach ($index as $v) {
+        echo "
+      <div class='col d-flex align-items-start' >
+      <div >
+      <form action='' method='post'>
+        <input type='text' name='thread' value='$v' hidden>
+        <h4 class='fw-bold mb-0'> <input type='submit' value='$v'></h4 >
+       </form> 
+        <p>Thread $v </p >
+      </div >
+    </div >
+  ";
+    }
+}
+echo "
+</div >
+</div >
 </div> 
 </body>
 </html>";

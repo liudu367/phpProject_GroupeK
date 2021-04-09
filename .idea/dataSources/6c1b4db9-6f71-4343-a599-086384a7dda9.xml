@@ -1185,6 +1185,7 @@ CODCONGRES</ColNames>
     <column id="320" parent="217" name="status">
       <Position>5</Position>
       <DataType>varchar(50)|0s</DataType>
+      <DefaultExpression>&apos;Ouvert&apos;</DefaultExpression>
     </column>
     <column id="321" parent="217" name="name_cours">
       <Position>6</Position>

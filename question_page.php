@@ -73,7 +73,7 @@ if ($person->getClass() == 3) {
   <div class='row g-5'>
       <div class='col-md-7 col-lg-8'>
         <h4 class='mb-3'>Question</h4>
-        <form action='functions' method='post' class='needs-validation' novalidate=''>
+        <form action='functions/verify_question.php' method='post' class='needs-validation' novalidate=''>
           <div class='row g-3'>";
 
     echo "
@@ -87,7 +87,7 @@ if ($person->getClass() == 3) {
             
             <div class='col-12'>
               <label for='content' class='form-label'>Contenu <span class='text-muted'></span></label>
-              <textarea class='form-control' id='content' name='content_que' placeholder='écrire votre question'></textarea>
+              <textarea class='form-control' id='content' name='content_que' placeholder='écrire votre question' required></textarea>
               <div class='invalid-feedback'>
                Veuillez saisir votre question
               </div>
@@ -99,15 +99,11 @@ if ($person->getClass() == 3) {
                 <option value=''>Choisir...</option>";
 
     $index = array_keys(json_decode($person->getJSONCourses($conn), true));
-//    $result = $person->getCourses($conn, $person->getEmail());
-//    if ($result->num_rows > 0) {
-//        while ($rows = $result->fetch_row()) {
+
     foreach ($index as $v) {
         echo "<option value='$v'>".$v."</option>";
     }
 
-///}
-    //   }
     echo "</select>";
     echo "        <div class='invalid-feedback'>
                 Veuillez sélectionner un cours
@@ -117,9 +113,8 @@ if ($person->getClass() == 3) {
     echo "
             <div class='col-md-4'>
               <label for='prof' class='form-label'>Professeur</label>
-              <select class='form-select' id='prof' name='name_prof' required>
+              <select class='form-select' id='prof' name='email_prof' required>
                 <option value=''>Choisir...</option>
-                <option>California</option>
               </select>
               <div class='invalid-feedback'>
                 Veuillez choisir un professeur
