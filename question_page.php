@@ -56,7 +56,7 @@ if ($person->getClass() == 3) {
       <li><a href='question_page.php' class='nav-link px-2 link-dark'>Question</a></li>
       <li><a href='#' class='nav-link px-2 link-dark'>Pricing</a></li>
       <li><a href='#' class='nav-link px-2 link-dark'>FAQs</a></li>
-      <li><a href='#' class='nav-link px-2 link-dark'>About</a></li>
+      <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a></li>
     </ul>
 
     <div class='col-md-3 text-end'>";

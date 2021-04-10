@@ -27,7 +27,13 @@ $query
 mysqli_select_db($conn, 'db_21912824_2');
 if ($result = mysqli_query($conn, $query)) {
     echo "Soumission Success";
+    echo "<script>
+        setTimeout(function(){window.location.href='../index.php';},2000);
+    </script>";
 
 } else {
     echo "Soumission echec ";
+    echo "<script>
+        setTimeout(function(){window.location.href='../index.php';},2000);
+    </script>";
 }

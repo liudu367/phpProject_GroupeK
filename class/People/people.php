@@ -158,6 +158,27 @@ class people
 
         return json_encode($data);
     }
+
+    public function getQuestionOneCourse($conn, $thread)
+    {
+        $query = "select pq.code_que,pq.title_que,concat(p1.fn_user,' ',p1.ln_user),concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que 
+                 from php_question pq, php_users p1, php_users p2 
+                 where pq.name_cours='$thread' and p1.code_user = pq.code_user and p2.code_user = pq.code_user_res";
+        mysqli_select_db($conn, 'db_21912824_2');
+        $result = mysqli_query($conn, $query);
+
+        while ($rows = $result->fetch_row()) {
+            $data[] = array('code'           => $rows[0],
+                            'title'          => $rows [1],
+                            'Question Asker' => $rows[2],
+                            'Respondent'     => $rows[3],
+                            'status'         => $rows[4],
+                            'update_time'    => $rows[5],
+            );
+        }
+
+        return json_encode($data);
+    }
 }
 //
 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+header('Content-Type: text/html; charset=utf-8');
 require_once('../class/People/people.php');
 
 use People\people;
@@ -12,7 +13,11 @@ if ($person->verifyPassword($conn, $user, $pwd) == true) {
     $_SESSION['username'] = $user;
     $_SESSION['password'] = $pwd;
     header('location:../index.php');
+
 } else {
-    header('location:../login.php');
+    echo "";
+    echo "<script>
+        setTimeout(function(){window.location.href='../login.php';},2000);
+    </script>";
 }
 
