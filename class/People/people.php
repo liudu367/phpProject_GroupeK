@@ -39,6 +39,19 @@ class people
         return $this->class;
     }
 
+    public function getFullname($conn, $codeuser)
+    {
+        mysqli_select_db($conn, 'db_21912824_2');
+        $query
+            = "select concat(pu.fn_user,' ',pu.ln_user) from php_users pu where code_user = $codeuser ";
+        $result = mysqli_query($conn, $query);
+        while ($rows = $result->fetch_row()) {
+            $name = $rows[0];
+        }
+
+        return $name;
+    }
+
 
     public function setAll($conn, $username)
     {
@@ -168,12 +181,13 @@ class people
         $result = mysqli_query($conn, $query);
 
         while ($rows = $result->fetch_row()) {
-            $data[] = array('code'           => $rows[0],
-                            'title'          => $rows [1],
-                            'Question Asker' => $rows[2],
-                            'Respondent'     => $rows[3],
-                            'status'         => $rows[4],
-                            'update_time'    => $rows[5],
+            $data[] = array(
+                'code'           => $rows[0],
+                'title'          => $rows [1],
+                'Question Asker' => $rows[2],
+                'Respondent'     => $rows[3],
+                'status'         => $rows[4],
+                'update_time'    => $rows[5],
             );
         }
 

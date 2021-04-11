@@ -12,7 +12,8 @@ use People\people;
 $person = new people();
 $person->setAll($conn, $_SESSION['username']);
 
-echo "
+?>
+
 <!DOCTYPE>
 <html lang='fr'>
 <head>
@@ -26,51 +27,55 @@ echo "
 </head>
 <body>
 <div class='container'>
-  <header class='d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom'>
-    <a href='/' class='d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none'>
-      <svg class='bi me-2' width='40' height='32'><use xlink:href='#bootstrap'></use></svg>
-    </a>
+    <header class='d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom'>
+        <a href='/'
+           class='d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none'>
+            <svg class='bi me-2' width='40' height='32'>
+                <use xlink:href='#bootstrap'></use>
+            </svg>
+        </a>
 
-    <ul class='nav col-12 col-md-auto mb-2 justify-content-center mb-md-0'>
-      <li><a href='index.php' class='nav-link px-2 link-secondary'>Home</a></li>
-      <li><a href='question_page.php' class='nav-link px-2 link-dark'>Question</a></li>
-      <li><a href='#' class='nav-link px-2 link-dark'>Pricing</a></li>
-      <li><a href='#' class='nav-link px-2 link-dark'>FAQs</a></li>
-      <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a></li>
-    </ul>
+        <ul class='nav col-12 col-md-auto mb-2 justify-content-center mb-md-0'>
+            <li><a href='index.php'
+                   class='nav-link px-2 link-secondary'>Home</a></li>
+            <li><a href='question_page.php' class='nav-link px-2 link-dark'>Question</a>
+            </li>
+            <li><a href='#' class='nav-link px-2 link-dark'>Pricing</a></li>
+            <li><a href='#' class='nav-link px-2 link-dark'>FAQs</a></li>
+            <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a>
+            </li>
+        </ul>
 
-    <div class='col-md-3 text-end'>";
+        <div class='col-md-3 text-end'>
 
-if (isset($_SESSION['password'])) {
-    echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
-}
-echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
-    </div>
-  </header>
-  <div class='container py-5' id = 'Course'>
-  <h2 class='pb-2 border-bottom' > Thread </h2 >
-       <div class='row row-cols-4 g-4 py-5' >
-  ";
 
-if ($person->getClass() == 3) {
-    $index = array_keys(json_decode($person->getJSONCourses($conn), true));
-    foreach ($index as $v) {
-        echo "
-      <div class='col d-flex align-items-start' >
-      <div >
-      <form action='thread_template.php' method='post'>
-        <input type='text' name='thread' value='$v' hidden>
-        <h4 class='fw-bold mb-0'> <input type='submit' value='$v'></h4 >
-       </form> 
-        <p>Thread $v </p >
-      </div >
-    </div >
-  ";
-    }
-}
-echo "
-</div >
-</div >
-</div> 
+            <?php
+            if (isset($_SESSION['password']) and $person->getClass() == 3) {
+                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "
+                          <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
+                        </div>
+                      </header>
+                      <div class='container py-5' id = 'Course'>
+                      <h2 class='pb-2 text-danger' > Thread </h2 >
+                           <div class='row row-cols-4 g-4 py-5' >
+                      ";
+
+                $index = array_keys(json_decode($person->getJSONCourses($conn),
+                    true));
+                foreach ($index as $v) {
+                    echo "
+            <div class='col d-flex align-items-start'>
+                <div>
+                    <a class='text-decoration-none text-danger' href='thread_template.php?thread=$v'> $v </a>
+                    <p>Thread $v </p >
+                </div >
+            </div >";
+                }
+            }
+            ?>
+
+        </div>
+</div>
 </body>
-</html>";
+</html>

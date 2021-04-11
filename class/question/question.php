@@ -53,10 +53,10 @@ class question
     {
         mysqli_select_db($conn, 'db_21912824_2');
         $query
-            = "select pr.title_re,pr.content_re,pr.dt_re,concat(pu.fn_user,' ',pu.fn_user) 
+            = "select pr.title_re,pr.content_re,pr.dt_re,concat(pu.fn_user,' ',pu.ln_user) 
                from php_responses pr, php_users pu 
                where pr.code_user = pu.code_user and  pr.code_que=$this->code_que
-               order by pr.dt_re asc ";
+               order by pr.dt_re";
         $result = mysqli_query($conn, $query);
 
         while ($rows = $result->fetch_row()) {

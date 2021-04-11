@@ -45,7 +45,7 @@ echo "
 if (isset($_SESSION['password'])) {
     echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
 }
-echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
+echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
     </div>
   </header>
   <div class='container py-5' id = 'Course'>

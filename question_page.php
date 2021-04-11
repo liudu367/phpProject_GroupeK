@@ -65,7 +65,7 @@ if ($person->getClass() == 3) {
     if (isset($_SESSION['password'])) {
         echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
     }
-    echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-primary'>Déconnexion</button></a>
+    echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
     </div>
   </header>
   
@@ -121,20 +121,11 @@ if ($person->getClass() == 3) {
               </div>
             </div>
 
-            <div class='col-md-3' hidden>
-              <label for='zip' class='form-label'>Zip</label>
-              <input type='text' class='form-control' id='zip' placeholder='' required=''>
-              <div class='invalid-feedback'>
-                Zip code required.
-              </div>
-            </div>
-          </div>
 
           <hr class='my-4'>
 
-          <hr class='my-4'>
 
-          <button class='w-100 btn btn-primary btn-lg' type='submit'>Poser La Question</button>
+          <button class='w-100 btn btn-danger btn-lg' type='submit'>Poser La Question</button>
         </form>
       </div>
     </div>
