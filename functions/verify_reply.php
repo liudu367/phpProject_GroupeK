@@ -9,8 +9,8 @@ $conn = require_once("./connection_db.php");
 use People\people;
 
 $person = new people();
-$person->setAll($conn, $_SESSION["username"]);
-$code_user = $person->getCode();
+$person->setUserPara($conn, $_SESSION["username"]);
+$code_user = $person->getCodeUser();
 
 $content_re = $_POST['content_re'];
 $code_que = $_POST['code_que'];

@@ -14,11 +14,11 @@ $emailprof = $_POST['email_prof'];
 
 
 $student = new people();
-$student->setAll($conn, $_SESSION['username']);
-$code_user = $student->getCode();
+$student->setUserPara($conn, $_SESSION['username']);
+$code_user = $student->getCodeUser();
 $professor = new people();
-$professor->setAll($conn, $emailprof);
-$code_user_res = $professor->getCode();
+$professor->setUserPara($conn, $emailprof);
+$code_user_res = $professor->getCodeUser();
 $status = 'ouvert';
 $uptime_que = date("Y-m-d H:i:s");
 

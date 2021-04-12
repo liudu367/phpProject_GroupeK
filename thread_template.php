@@ -7,50 +7,100 @@ $conn = require_once('./functions/connection_db.php');
 use People\people;
 
 $person = new people();
-$person->setAll($conn, $_SESSION['username']);
+$person->setUserPara($conn, $_SESSION['username']);
 
 $thread = $_GET['thread'];
 $_SESSION['thread'] = $thread;
 
+if ($person->getClass() == 1) {
+    if (json_decode($person->getAllThreadQues($conn, $thread), true) == null) {
+        echo "<script>
+        setTimeout(function(){window.location.href='index.php';},2000);
+    </script>";
+        echo "il n'y a pas de question de"." ".$thread;
 
-if (count(json_decode($person->getQuestionOneCourse($conn, $thread), true))
-== 0
-) {
-    echo "il n'y a pas de question de"." ".$thread;
-
-} else {
-$data = json_decode($person->getQuestionOneCourse($conn, $thread), true);
-$index = array_keys($data);
+    } else {
+        $data = json_decode($person->getAllThreadQues($conn, $thread), true);
+        $index = array_keys($data);
 //column Code
-$codeArr = array();
-foreach ($data as $key => $value) {
-    $codeArr[] = $value['code'];
-}
+        $codeArr = array();
+        foreach ($data as $key => $value) {
+            $codeArr[] = $value['code'];
+        }
 //column Title
-$titleArr = array();
-foreach ($data as $key => $value) {
-    $titleArr[] = $value['title'];
-}
+        $titleArr = array();
+        foreach ($data as $key => $value) {
+            $titleArr[] = $value['title'];
+        }
 //column Question Asker
-$qaArr = array();
-foreach ($data as $key => $value) {
-    $qaArr[] = $value['Question Asker'];
-}
+        $qaArr = array();
+        foreach ($data as $key => $value) {
+            $qaArr[] = $value['Question Asker'];
+        }
 //column Respondent
-$resArr = array();
-foreach ($data as $key => $value) {
-    $resArr[] = $value['Respondent'];
-}
+        $resArr = array();
+        foreach ($data as $key => $value) {
+            $resArr[] = $value['Respondent'];
+        }
 //column status
-$staArr = array();
-foreach ($data as $key => $value) {
-    $staArr[] = $value['status'];
-}
+        $staArr = array();
+        foreach ($data as $key => $value) {
+            $staArr[] = $value['status'];
+        }
 //column update_time
-$updtArr = array();
-foreach ($data as $key => $value) {
-    $updtArr[] = $value['update_time'];
+        $updtArr = array();
+        foreach ($data as $key => $value) {
+            $updtArr[] = $value['update_time'];
+        }
+
+    }
+
+
+} elseif ($person->getClass() == 3) {
+    if (json_decode($person->getStuThreadQues($conn, $thread), true) == null) {
+        echo "<script>
+        setTimeout(function(){window.location.href='index.php';},2000);
+    </script>";
+        echo "il n'y a pas de question de"." ".$thread;
+
+    } else {
+        $data1 = json_decode($person->getStuThreadQues($conn, $thread), true);
+        $index1 = array_keys($data1);
+//column Code
+        $codeArr = array();
+        foreach ($data1 as $key => $value) {
+            $codeArr[] = $value['code'];
+        }
+//column Title
+        $titleArr = array();
+        foreach ($data1 as $key => $value) {
+            $titleArr[] = $value['title'];
+        }
+//column Question Asker
+        $qaArr = array();
+        foreach ($data1 as $key => $value) {
+            $qaArr[] = $value['Question Asker'];
+        }
+//column Respondent
+        $resArr = array();
+        foreach ($data1 as $key => $value) {
+            $resArr[] = $value['Respondent'];
+        }
+//column status
+        $staArr = array();
+        foreach ($data1 as $key => $value) {
+            $staArr[] = $value['status'];
+        }
+//column update_time
+        $updtArr = array();
+        foreach ($data1 as $key => $value) {
+            $updtArr[] = $value['update_time'];
+        }
+    }
+
+
 }
+
 
 ?>
 <!DOCTYPE>
@@ -86,10 +136,13 @@ foreach ($data as $key => $value) {
         </div>
     </div>
 
-
+    <!--the view page model of professor/admin-->
     <?php
-    foreach ($index as $v) {
-        echo "
+    if (json_decode($person->getAllThreadQues($conn, $thread), true) != null
+        and $person->getClass() != 3
+    ) {
+        foreach ($index as $v) {
+            echo "
         <div class='row row-cols-5 '>
             <div class='col-md-5'>
                 <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr[$v]'> $titleArr[$v] </a></p>
@@ -109,8 +162,37 @@ foreach ($data as $key => $value) {
         </div>
       ";
 
-    }
+        }
     } ?>
+    <!--the view page model of student-->
+    <?php
+    if (json_decode($person->getStuThreadQues($conn, $thread), true) != null
+        and $person->getClass() == 3
+    ) {
+        foreach ($index1 as $v) {
+            echo "
+        <div class='row row-cols-5 '>
+            <div class='col-md-5'>
+                <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr[$v]'> $titleArr[$v] </a></p>
+            </div>
+            <div class='col-md-2'>
+                <p>$qaArr[$v]</p>
+            </div>
+            <div class='col-md-2'>
+                <p>$resArr[$v]</p>
+            </div>
+            <div class='col-md-1'>
+                <p>$staArr[$v]</p>
+            </div>
+            <div class='col-md-2'>
+                <p>$updtArr[$v]</p>
+            </div>
+        </div>
+      ";
+
+        }
+    } ?>
+
 
 </div>
 

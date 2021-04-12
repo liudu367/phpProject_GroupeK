@@ -1,17 +1,20 @@
 <?php
+//start the session of user
 session_start();
 include('./class/People/people.php');
 $conn = require_once('./functions/connection_db.php');
 
+// if the password isn't set, back to page 'login.php'
 if (isset($_SESSION['password']) == false) {
     header('location:login.php');
 }
 
+/*define the var $person as class people and set all of its coordinates with username*/
+
 use People\people;
 
 $person = new people();
-$person->setAll($conn, $_SESSION['username']);
-
+$person->setUserPara($conn, $_SESSION['username']);
 ?>
 
 <!DOCTYPE>
@@ -26,6 +29,7 @@ $person->setAll($conn, $_SESSION['username']);
     <script src='./js/bootstrap.min.js'></script>
 </head>
 <body>
+<!--the header of index page-->
 <div class='container'>
     <header class='d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom'>
         <a href='/'
@@ -48,7 +52,7 @@ $person->setAll($conn, $_SESSION['username']);
 
         <div class='col-md-3 text-end'>
 
-
+            <!--the thread block of student page-->
             <?php
             if (isset($_SESSION['password']) and $person->getClass() == 3) {
                 echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
@@ -61,7 +65,9 @@ $person->setAll($conn, $_SESSION['username']);
                            <div class='row row-cols-4 g-4 py-5' >
                       ";
 
-                $index = array_keys(json_decode($person->getJSONCourses($conn),
+                //print threads of all courses
+                $index
+                    = array_keys(json_decode($person->getCoursJson_stu($conn),
                     true));
                 foreach ($index as $v) {
                     echo "
@@ -75,6 +81,33 @@ $person->setAll($conn, $_SESSION['username']);
             }
             ?>
 
+
+            <!--the thread block of professor page-->
+            <?php
+            if (isset($_SESSION['password']) and ($person->getClass() == 1)
+            ) {
+                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "
+                          <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
+                        </div>
+                      </header>
+                      <div class='container py-5' id = 'Course'>
+                      <h2 class='pb-2 text-danger' > Thread </h2 >
+                           <div class='row row-cols-4 g-4 py-5' >
+                      ";
+                $index = array_keys(json_decode($person->getProfJson($conn),
+                    true));
+                foreach ($index as $v) {
+                    echo "
+            <div class='col d-flex align-items-start'>
+                <div>
+                    <a class='text-decoration-none text-danger' href='thread_template.php?thread=$v'> $v </a>
+                    <p>Thread $v </p >
+                </div >
+            </div >";
+                }
+            }
+            ?>
         </div>
 </div>
 </body>

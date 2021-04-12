@@ -58,19 +58,20 @@ class question
                where pr.code_user = pu.code_user and  pr.code_que=$this->code_que
                order by pr.dt_re";
         $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[] = array(
+                    'title'      => $rows[0],
+                    'content'    => $rows[1],
+                    'dt'         => $rows[2],
+                    'respondent' => $rows[3],
+                );
+            }
 
-        while ($rows = $result->fetch_row()) {
-            $data[] = array(
-                'title'      => $rows[0],
-                'content'    => $rows[1],
-                'dt'         => $rows[2],
-                'respondent' => $rows[3],
-            );
+            return json_encode($data);
+        } else {
+            return null;
         }
-
-        return json_encode($data);
-
-
     }
 
 

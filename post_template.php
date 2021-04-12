@@ -9,17 +9,21 @@ use People\people;
 use question\question;
 
 $person = new people();
-$person->setAll($conn, $_SESSION["username"]);
+$person->setUserPara($conn, $_SESSION["username"]);
 
 
 $question = new question();
 $codeQue = $_GET["code_que"];
 $question->setAll($conn, $codeQue);
-$allResponses = json_decode($question->getAllResponses($conn), true);
 $questionAll = $question->getAll();
 $author = new people();
 $nameAuthor = $author->getFullname($conn, $questionAll[6]);
-$index = array_keys($allResponses);
+
+
+if (json_decode($question->getAllResponses($conn), true) != null) {
+    $allResponses = json_decode($question->getAllResponses($conn), true);
+    $index = array_keys($allResponses);
+}
 
 
 ?>
@@ -99,12 +103,13 @@ $index = array_keys($allResponses);
             <h6 class="border-bottom pb-2 mb-0">Réponses</h6>
 
             <?php
-            foreach ($index as $v) {
-                $numero = $v + 1;
-                $nameRes = $allResponses[$v]['respondent'];
-                $dateTime = $allResponses[$v]['dt'];
-                $content = $allResponses[$v]['content'];
-                echo "
+            if (json_decode($question->getAllResponses($conn), true) != null) {
+                foreach ($index as $v) {
+                    $numero = $v + 1;
+                    $nameRes = $allResponses[$v]['respondent'];
+                    $dateTime = $allResponses[$v]['dt'];
+                    $content = $allResponses[$v]['content'];
+                    echo "
              <div class='d-flex text-muted pt-3'>
                 <svg class='bd-placeholder-img flex-shrink-0 me-2 rounded' width='32' height='32' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: 32x32' preserveAspectRatio='xMidYMid slice' focusable='false'><title>Placeholder</title><rect width='100%' height='100%' fill='#007bff'></rect><text x='50%' y='50%' fill='#007bff' dy='.3em'>32x32</text></svg>
                 <p class='pb-3 mb-0 small lh-sm border-bottom text-dark'>
@@ -113,6 +118,10 @@ $index = array_keys($allResponses);
                 </p>
             </div>
              ";
+
+
+                }
+
 
             }
             ?>
@@ -129,7 +138,7 @@ $index = array_keys($allResponses);
                 <input type="number" name="code_que" value='<?php
                 echo $codeQue; ?>' hidden>
                 <input type="number" name="code_user" value=''<?php
-                echo $person->getCode(); ?> hidden>
+                echo $person->getCodeUser(); ?> hidden>
                 <div class='d-flex text-muted pt-2'>
                     <input class="btn btn-danger" type="submit"
                            value="Répondre">
