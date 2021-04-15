@@ -382,6 +382,75 @@ class people
 
     }
 
+    public function getTransferJson($conn, $codeQuesArr)
+    {
+        mysqli_select_db($conn, 'db_21912824_2');
+        foreach ($codeQuesArr as $value) {
+            $query = "select DISTINCT pu1.email_user
+                        from php_question,php_course,php_users pu1, php_users pu2
+                        where php_question.code_que = $value and php_question.name_cours = php_course.name_cours and php_course.code_prof = pu1.code_user and php_course.code_cours_respon = pu2.code_user
+                        union 
+                        select distinct pu2.email_user
+                        from php_question,php_course,php_users pu1, php_users pu2
+                        where php_question.code_que = $value and php_question.name_cours = php_course.name_cours and php_course.code_prof = pu1.code_user and php_course.code_cours_respon = pu2.code_user";
+            $result = mysqli_query($conn, $query);
+            if ($result->num_rows > 0) {
+                while ($rows = $result->fetch_row()) {
+                    $data[$value][] = $rows[0];
+                }
+
+            }
+            $query = "select DISTINCT pu2.email_user
+                      from  php_question,php_register,php_groups,php_users pu2
+                      where php_question.code_que = $value and php_question.code_user = php_register.code_user and php_register.code_gp = php_groups.code_gp and php_groups.code_sec = pu2.code_sec ";
+            $result = mysqli_query($conn, $query);
+            if ($result->num_rows > 0) {
+                while ($rows = $result->fetch_row()) {
+                    $data[$value][] = $rows[0];
+                }
+            }
+        }
+
+        return json_encode($data);
+    }
+
+    public function getTransferAdminJson($conn)
+    {
+        mysqli_select_db($conn, 'db_21912824_2');
+
+        $query
+            = "select distinct a1.email_user
+               from
+               (select distinct pu2.email_user
+               from php_users pu1,php_groups,php_course,php_users pu2  
+               where pu1.code_user = $this->code and pu1.code_sec = php_groups.code_sec and php_course.code_gp = php_groups.code_gp and php_course.code_cours_respon = pu2.code_user
+               union  
+               select distinct pu2.email_user
+               from php_users pu1,php_groups,php_course,php_users pu2  
+               where pu1.code_user = $this->code and pu1.code_sec = php_groups.code_sec and php_course.code_gp = php_groups.code_gp and php_course.code_prof = pu2.code_user) as a1 ";
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[] = $rows[0];
+            }
+
+        }
+
+        $query = "select pu2.email_user
+                  from php_users pu1, php_users pu2
+                  where pu1.code_sec = pu2.code_sec
+                  and pu1.code_user = $this->code
+                  and pu2.code_user != $this->code";
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[] = $rows[0];
+            }
+        }
+
+        return json_encode($data);
+    }
+
 
 }
 //

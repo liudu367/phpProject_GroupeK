@@ -131,21 +131,23 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
 <body>
 <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/"
+        <a href="#"
            class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap"></use>
-            </svg>
+            <img src="pic/logo-fr.jpg" height="75px" width="75px">
         </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="index.php"
-                   class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="question_page.php" class="nav-link px-2 link-dark">Question</a>
+            <li><a href='index.php'
+                   class='nav-link px-2 link-dark'>Page d'accueil</a></li>
+            <li><a href='question_page.php' class='nav-link px-2 link-dark'>Page
+                    des Questions</a>
             </li>
-            <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-            <li><a href="profil.php" class="nav-link px-2 link-dark">Profil</a>
+            <?php
+            if ($person->getClass() != 3) {
+                echo "<li><a href='transfer_question.php' class='nav-link px-2 link-dark'>Transférer</a></li>";
+            } ?>
+            <li><a href='profil.php'
+                   class='nav-link px-2 link-danger'>Profil</a>
             </li>
         </ul>
 
@@ -163,10 +165,10 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
                 <p>Titre</p>
             </div>
             <div class='col-md'>
-                <p>Répondant</p>
+                <p>Responsable</p>
             </div>
             <div class='col-md'>
-                <p>statuts</p>
+                <p>Statuts</p>
             </div>
             <div class='col-md'>
                 <p>Temps de mise à jour</p>
@@ -183,7 +185,8 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
                 foreach ($index as $v) {
                     echo "<div class='row row-cols-4'>
             <div class='col-md-5'>
-                <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr[$v]'> $titleArr[$v] </a></p>
+                <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr[$v]'> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='text-center bi bi-question-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z'/>
+                </svg>$titleArr[$v] </a></p>
             </div>
             <div class='col-md'>
                 <p>$resArr[$v]</p>
@@ -207,10 +210,10 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
                     <p>Questionneur</p>
                 </div>
                 <div class="col-md-2">
-                    <p>Répondant</p>
+                    <p>Responsable</p>
                 </div>
                 <div class="col-md-1">
-                    <p>statuts</p>
+                    <p>Statuts</p>
                 </div>
                 <div class="col-md-2">
                     <p>Temps de mise à jour</p>
@@ -226,7 +229,8 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
                 foreach ($index1 as $v1) {
                     echo " <div class='row row-cols-5 '>
             <div class='col-md-5'>
-                <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr1[$v1]'> $titleArr1[$v1] </a></p>
+                <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr1[$v1]'> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='text-center bi bi-question-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z'/>
+                </svg>$titleArr1[$v1] </a></p>
             </div>
             <div class='col-md-2'>
                 <p>$qaArr1[$v1]</p>
@@ -252,7 +256,7 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
             <?php
             if ($person->getClass() == 1 or $person->getClass() == 2) {
                 echo "<div class='container py-5' id = 'Course'>
-                <h2 class='pb-2 text-danger' > Mes Responsalbes </h2 >
+                <h2 class='pb-2 text-danger' > Mes Responsables </h2 >
                 <div class='row row-cols-4 '>
                     <div class='col-md-5'>
                         <p>Titre</p>
@@ -261,13 +265,13 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
                         <p>Questionneur</p>
                     </div>
                     <div class='col-md-1'>
-                        <p>statuts</p>
+                        <p>Statuts</p>
                     </div>
                     <div class='col-md-2'>
                         <p>Temps de mise à jour</p>
                     </div>
-                    <div class='col-md-2'>
-                        <p>Temps de mise à jour</p>
+                    <div class='col-md-2 text-center' >
+                        <p>Interrupteur</p>
                     </div>
                 </div>";
 
@@ -277,7 +281,8 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
                     foreach ($index2 as $v2) {
                         echo "<div class='row row-cols-4'>
             <div class='col-md-5'>
-                <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr2[$v2]'> $titleArr2[$v2] </a></p>
+                <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr2[$v2]'> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='text-center bi bi-question-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z'/>
+                </svg>$titleArr2[$v2] </a></p>
             </div>
             <div class='col-md-2'>
                 <p>$resArr2[$v2]</p>
@@ -289,10 +294,10 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
                 <p>$updtArr2[$v2]</p>
             </div>
             <div class='col-md-1'>
-                <a class='btn btn-danger' href='functions/close_open_question.php?code_que=$codeArr2[$v2]&status=fermée' >Fermer</a>
+                <a class='btn-sm btn-danger text-decoration-none' href='functions/close_open_question.php?code_que=$codeArr2[$v2]&status=fermée' >Fermer</a>
             </div>
             <div class='col-md-1'>
-                <a class='btn btn-primary' href='functions/close_open_question.php?code_que=$codeArr2[$v2]&status=ouvert' >Ouvrir</a>
+                <a class='btn-sm btn-primary text-decoration-none' href='functions/close_open_question.php?code_que=$codeArr2[$v2]&status=ouvert' >Ouvrir</a>
             </div>
         </div>";
                     }

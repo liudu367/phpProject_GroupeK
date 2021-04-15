@@ -41,21 +41,22 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
 <body>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/"
+        <a href="#"
            class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap"></use>
-            </svg>
+            <img src="pic/logo-fr.jpg" height="75px" width="75px">
         </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="index.php"
-                   class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="question_page.php" class="nav-link px-2 link-dark">Question</a>
+            <li><a href='index.php'
+                   class='nav-link px-2 link-danger'>Page d'accueil</a></li>
+            <li><a href='question_page.php' class='nav-link px-2 link-dark'>Page
+                    des Questions</a>
             </li>
-            <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-            <li><a href="profil.php" class="nav-link px-2 link-dark">Profil</a>
+            <?php
+            if ($person->getClass() != 3) {
+                echo "<li><a href='transfer_question.php' class='nav-link px-2 link-dark'>Transférer</a></li>";
+            } ?>
+            <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a>
             </li>
         </ul>
         <div class="col-md-3 text-end">

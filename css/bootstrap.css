@@ -7944,6 +7944,7 @@ textarea.form-control-lg {
     color: inherit !important;
 }
 
+
 .bg-primary {
     background-color: #0d6efd !important;
 }
@@ -7977,7 +7978,7 @@ textarea.form-control-lg {
 }
 
 .bg-body {
-    background-color: #fff !important;
+    background-color: #ffffff !important
 }
 
 .bg-white {
