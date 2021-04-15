@@ -284,6 +284,51 @@ class people
     }
 
 
+    public function getMyCharge($conn)
+    {
+        $query = "select pq.code_que,pq.title_que,concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que 
+                 from php_question pq, php_users p2 
+                 where pq.code_user_res=$this->code  and p2.code_user = pq.code_user
+                 order by pq.uptime_que desc";
+        mysqli_select_db($conn, 'db_21912824_2');
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[] = array(
+                    'code'           => $rows[0],
+                    'title'          => $rows [1],
+                    'Question Asker' => $rows[2],
+                    'status'         => $rows[3],
+                    'update_time'    => $rows[4],
+                );
+            }
+
+            return json_encode($data);
+        } else {
+            return null;
+        }
+    }
+
+    public function getAdminBlock($conn)
+    {
+        mysqli_select_db($conn, 'db_21912824_2');
+        $query
+            = "select distinct php_course.name_cours from php_users, php_groups, php_course where php_users.code_user = $this->code and php_users.code_sec = php_groups.code_sec and php_groups.code_gp = php_course.code_gp";
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[] = $rows[0];
+            }
+
+        }
+        $data[] = "Autres";
+        $data[] = "La vie universitaire";
+        $data[] = "Les questions administratives";
+
+        return json_encode($data);
+    }
+
+
     public function getProfJson($conn)
     {
         mysqli_select_db($conn, 'db_21912824_2');
@@ -309,16 +354,25 @@ class people
                         union 
                         select pc2.code_gp,pc2.name_cours from php_users pu2, php_course pc2 where pu2.code_user = pc2.code_cours_respon and pu2.email_user='$this->email') as a1,
                         php_groups pg1, php_users pu3
-                   where a1.code_gp = pg1.code_gp and pg1.code_sec = pu3.code_sec ";
+                   where a1.code_gp = pg1.code_gp and pg1.code_sec = pu3.code_sec";
             $result = mysqli_query($conn, $query);
             while ($rows = $result->fetch_row()) {
                 foreach ($index as $v) {
                     if ($rows[0] == $v) {
                         $data[$v][] = $rows[1];
-                    } elseif ($v == "Autres") {
-                        $data[$v][] = $rows[1];
                     }
                 }
+            }
+            foreach ($data as $k) {
+                foreach ($k as $v2) {
+                    $transfer[] = $v2;
+                }
+            }
+            $t1 = array_unique($transfer);
+            foreach ($t1 as $v3) {
+                $data["Autres"][] = $v3;
+                $data["La vie universitaire"][] = $v3;
+                $data["Les questions administratives"][] = $v3;
             }
 
             return json_encode($data);

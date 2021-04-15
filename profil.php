@@ -83,6 +83,38 @@ if (json_decode($person->getMyParti($conn), true) != null) {
 
 }
 
+//Get arrays of my Question in charge
+if (json_decode($person->getMyCharge($conn), true) != null) {
+    $data2 = json_decode($person->getMyCharge($conn), true);
+    $index2 = array_keys($data2);
+//column Code
+    $codeArr2 = array();
+    foreach ($data2 as $key => $value) {
+        $codeArr2[] = $value['code'];
+    }
+//column Title
+    $titleArr2 = array();
+    foreach ($data2 as $key => $value) {
+        $titleArr2[] = $value['title'];
+    }
+
+//column Respondent
+
+    foreach ($data2 as $key => $value) {
+        $resArr2[] = $value['Question Asker'];
+    }
+//column status
+
+    foreach ($data2 as $key => $value) {
+        $staArr2[] = $value['status'];
+    }
+//column update_time
+
+    foreach ($data2 as $key => $value) {
+        $updtArr2[] = $value['update_time'];
+    }
+}
+
 
 ?>
 <!DOCTYPE>
@@ -216,5 +248,61 @@ if (json_decode($person->getMyParti($conn), true) != null) {
             ?>
 
 
+
+            <?php
+            if ($person->getClass() == 1 or $person->getClass() == 2) {
+                echo "<div class='container py-5' id = 'Course'>
+                <h2 class='pb-2 text-danger' > Mes Responsalbes </h2 >
+                <div class='row row-cols-4 '>
+                    <div class='col-md-5'>
+                        <p>Titre</p>
+                    </div>
+                    <div class='col-md-2'>
+                        <p>Questionneur</p>
+                    </div>
+                    <div class='col-md-1'>
+                        <p>statuts</p>
+                    </div>
+                    <div class='col-md-2'>
+                        <p>Temps de mise à jour</p>
+                    </div>
+                    <div class='col-md-2'>
+                        <p>Temps de mise à jour</p>
+                    </div>
+                </div>";
+
+                //            Get my questions in Charge
+                if (json_decode($person->getMyCharge($conn), true) != null) {
+                    $index2 = array_keys($data2);
+                    foreach ($index2 as $v2) {
+                        echo "<div class='row row-cols-4'>
+            <div class='col-md-5'>
+                <p><a class='text-danger' style='text-decoration: none' href='post_template.php?code_que=$codeArr2[$v2]'> $titleArr2[$v2] </a></p>
+            </div>
+            <div class='col-md-2'>
+                <p>$resArr2[$v2]</p>
+            </div>
+            <div class='col-md-1'>
+                <p>$staArr2[$v2]</p>
+            </div>
+            <div class='col-md-2'>
+                <p>$updtArr2[$v2]</p>
+            </div>
+            <div class='col-md-1'>
+                <a class='btn btn-danger' href='functions/close_open_question.php?code_que=$codeArr2[$v2]&status=fermée' >Fermer</a>
+            </div>
+            <div class='col-md-1'>
+                <a class='btn btn-primary' href='functions/close_open_question.php?code_que=$codeArr2[$v2]&status=ouvert' >Ouvrir</a>
+            </div>
+        </div>";
+                    }
+                }
+            }
+            ?>
+
+
         </div>
     </div>
+</div>
+</body>
+</html>

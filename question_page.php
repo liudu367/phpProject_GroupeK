@@ -167,10 +167,21 @@ $person->setUserPara($conn, $_SESSION['username']);
 
                         <hr class="my-4">
 
-                        <button class="w-100 btn btn-danger btn-lg"
-                                type="submit">
+                        <?php
+                        if ($person->getClass() == 2) {
+                            echo "vous n'avez pas le droit à poser des questions";
+
+
+                        } else {
+                            echo "<button class='w-100 btn btn-danger btn-lg'
+                                type='submit'>
                             Poser La Question
-                        </button>
+                        </button>";
+                        }
+
+                        ?>
+
+
                 </form>
             </div>
         </div>

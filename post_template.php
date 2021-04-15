@@ -77,8 +77,15 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
         </div>
         <div class="row">
             <div class="col-sm">
-                <span class="badge bg-primary rounded-pill"> <?php
-                    echo $questionAll[4]; ?></span>
+                <?php
+                if ($questionAll[4] == 'ouvert') {
+                    echo "<span class='badge bg-primary rounded-pill'>$questionAll[4]</span>";
+                } else {
+                    echo "<span class='badge bg-danger rounded-pill'>$questionAll[4]</span>";
+                }
+
+
+                ?>
             </div>
         </div>
 
@@ -125,6 +132,7 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
 
             }
             ?>
+
         </div>
         <!--Response-->
         <div class="">
@@ -137,12 +145,19 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
                 </div>
                 <input type="number" name="code_que" value='<?php
                 echo $codeQue; ?>' hidden>
-                <input type="number" name="code_user" value=''<?php
-                echo $person->getCodeUser(); ?> hidden>
-                <div class='d-flex text-muted pt-2'>
-                    <input class="btn btn-danger" type="submit"
-                           value="Répondre">
-                </div>
+                <input type="number" name="code_user" value='<?php
+                echo $person->getCodeUser(); ?>' hidden>
+
+                <?php
+                if ($questionAll[4] == 'ouvert') {
+                    echo "<div class='d-flex text-muted pt-2'>
+                    <input class='btn btn-danger' type='submit'
+                           value='Répondre'>
+                     </div>";
+                } else {
+                    echo "<p class='text-danger'>Cette question est fermée et vous pouvez uniquement consulter cette question et sa réponse.</p>";
+                }
+                ?>
             </form>
     </main>
 </body>

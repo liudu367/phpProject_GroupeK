@@ -108,6 +108,33 @@ $person->setUserPara($conn, $_SESSION['username']);
                 }
             }
             ?>
+            <!-- the thread block of admin page-->
+            <?php
+            if (isset($_SESSION['password']) and ($person->getClass() == 2)) {
+                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "
+                          <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
+                        </div>
+                      </header>
+                      <div class='container py-5' id = 'Course'>
+                      <h2 class='pb-2 text-danger' > Thread </h2 >
+                           <div class='row row-cols-4 g-4 py-5' >
+                      ";
+                $data = json_decode($person->getAdminBlock($conn), true);
+                foreach ($data as $v) {
+                    echo "
+            <div class='col d-flex align-items-start'>
+                <div>
+                    <a class='text-decoration-none text-danger' href='thread_template.php?thread=$v'> $v </a>
+                    <p>Thread $v </p >
+                </div >
+            </div >";
+                }
+            }
+
+            ?>
+
+
         </div>
 </div>
 </body>

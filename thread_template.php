@@ -12,7 +12,7 @@ $person->setUserPara($conn, $_SESSION['username']);
 $thread = $_GET['thread'];
 $_SESSION['thread'] = $thread;
 
-if ($person->getClass() == 1) {
+if ($person->getClass() == 1 or $person->getClass() == 2) {
     if (json_decode($person->getAllThreadQues($conn, $thread), true) == null) {
         echo "<script>
         setTimeout(function(){window.location.href='index.php';},2000);
@@ -139,7 +139,7 @@ if ($person->getClass() == 1) {
     <!--the view page model of professor/admin-->
     <?php
     if (json_decode($person->getAllThreadQues($conn, $thread), true) != null
-        and $person->getClass() != 3
+        and ($person->getClass() == 1 or $person->getClass() == 2)
     ) {
         foreach ($index as $v) {
             echo "
