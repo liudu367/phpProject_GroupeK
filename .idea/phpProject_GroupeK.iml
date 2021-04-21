@@ -10,8 +10,11 @@
       <sourceFolder url="file://$MODULE_DIR$/class/People" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/functions" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/class/question" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
 </module>

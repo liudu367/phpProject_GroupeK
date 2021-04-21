@@ -12,6 +12,7 @@ use People\people;
 
 $person = new people();
 $person->setUserPara($conn, $_SESSION['username']);
+$email_original = $person->getEmail();
 $email_transfer = $_GET['email_transfer'];
 $code_course = $_GET['code_cours'];
 
@@ -29,9 +30,18 @@ $query
     = "update php_question set php_question.code_user_res = $code_transfer where php_question.code_que = $code_course";
 if (mysqli_query($conn, $query)) {
     echo "Transmission réussie";
-    echo "<script>
-        setTimeout(function(){window.location.href='../transfer_question.php';},2000);
+    //    Send the email to the professor
+    $to = $email_transfer;
+    $subject = 'Question Transfert';
+    $message = 'Je vous déja envoyé une Question';
+    $headers = 'From: '."$email_original"."\r\n".
+        'Reply - To:'."$email_transfer"."\r\n".
+        'X - Mailer: PHP / '.phpversion();
+    if (mail($to, $subject, $message, $headers) == true) {
+        echo "<script>
+        setTimeout(function(){window.location.href='../index.php';},2000);
     </script>";
+    }
 } else {
     echo "panne de transmission";
     echo "<script>
