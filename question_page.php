@@ -29,13 +29,14 @@ $person->setUserPara($conn, $_SESSION['username']);
             } elseif ($person->getClass() == 1) {
                 echo $person->getProfJson($conn);
             }
-            ?>;
+            ?> ;
 
         function selectProfessor() {
             var source = document.getElementById("course");
             var target = document.getElementById("prof");
             var selected = source.options[source.selectedIndex].value;
             target.innerHTML = "";
+
             for (var i = 0; i < data[selected].length; i++) {
                 var opt = document.createElement("option");
                 opt.value = data[selected][i];
@@ -62,6 +63,7 @@ $person->setUserPara($conn, $_SESSION['username']);
             <?php
             if ($person->getClass() != 3) {
                 echo "<li><a href='transfer_question.php' class='nav-link px-2 link-dark'>Transférer</a></li>";
+                echo "<li><a href='course_shifiting.php' class='nav-link px-2 link-dark'>Déplacement du Cours</a></li>";
             } ?>
             <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a>
             </li>

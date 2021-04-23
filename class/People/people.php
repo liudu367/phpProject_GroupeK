@@ -11,12 +11,6 @@ class people
     protected $prenom;
     protected $nom;
 
-
-    public function getCodeUser()
-    {
-        return $this->code;
-    }
-
     public function getNom()
     {
         return $this->nom;
@@ -26,12 +20,6 @@ class people
     {
         return $this->prenom;
     }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
 
     public function getClass()
     {
@@ -51,7 +39,6 @@ class people
 
         return $name;
     }
-
 
     public function setUserPara($conn, $username)
     {
@@ -106,7 +93,6 @@ class people
             return $result;
         }
     }
-
 
     public function getCoursJson_stu($conn)
     {
@@ -199,7 +185,6 @@ class people
 
     }
 
-
     public function getStuThreadQues($conn, $thread)
     {
         $query = "select pq.code_que,pq.title_que,concat(p1.fn_user,' ',p1.ln_user),concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que 
@@ -228,7 +213,6 @@ class people
 
     }
 
-
     public function getMyQuestions($conn)
     {
         $query = "select pq.code_que,pq.title_que,concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que 
@@ -253,7 +237,6 @@ class people
             return null;
         }
     }
-
 
     public function getMyParti($conn)
     {
@@ -282,7 +265,6 @@ class people
             return null;
         }
     }
-
 
     public function getMyCharge($conn)
     {
@@ -327,7 +309,6 @@ class people
 
         return json_encode($data);
     }
-
 
     public function getProfJson($conn)
     {
@@ -449,6 +430,241 @@ class people
         }
 
         return json_encode($data);
+    }
+
+    public function getMyCourseTableHTML($conn)
+    {
+        $code = $this->getCodeUser();
+        $query = " 
+            select DISTINCTROW pc.name_cours,pc.type_cours,pc.dt_cours,pc.code_cours
+            from php_course pc, php_users pu1,php_groups pg, php_users pu2 
+            where pc.code_prof = '$code'
+            and pc.code_gp = pg.code_gp
+            and pg.code_sec = pu2.code_sec
+            and pu1.code_user = pc.code_prof
+            order by pc.dt_cours";
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[] = array(
+                    "name_course" => $rows[0],
+                    "type_course" => $rows[1],
+                    "dt_course"   => $rows[2],
+                    "code_course" => $rows[3],
+                );
+            }
+
+            return json_encode($data);
+        } else {
+            return null;
+        }
+
+
+    }
+
+    public function getCodeUser()
+    {
+        return $this->code;
+    }
+
+    public function getMyDemandProf($conn)
+    {
+        $code = $this->getCodeUser();
+        $query
+            = "select code_dem,dt_cours_org, dt_cours_new, updt_dem, status_dem, code_cours, email_admin from php_demand where php_demand.code_user = '$code' order by updt_dem desc limit 5 ";
+        mysqli_select_db($conn, 'db_21912824_2');
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[] = array(
+                    "code_dem"     => $rows[0],
+                    "dt_cours_org" => $rows[1],
+                    "dt_cours_new" => $rows[2],
+                    "updt_dem"     => $rows[3],
+                    "status_dem"   => $rows[4],
+                    "code_cours"   => $rows[5],
+                    "email_admin"  => $rows[6],
+                );
+            }
+
+            return json_encode($data);
+        }
+
+        return null;
+    }
+
+    public function getMyDemandAdmin($conn)
+    {
+        $email = $this->getEmail();
+        $query
+            = "select code_dem, dt_cours_org, dt_cours_new,  updt_dem, status_dem, code_cours,CONCAT(php_users.fn_user,'',php_users.ln_user) , email_admin from php_demand,php_users where php_demand.email_admin = '$email' and php_demand.code_user = php_users.code_user";
+        $result = mysqli_query($conn, $query);
+        mysqli_select_db($conn, 'db_21912824_2');
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[] = array(
+                    "code_dem"     => $rows[0],
+                    "dt_cours_org" => $rows[1],
+                    "dt_cours_new" => $rows[2],
+                    "updt_dem"     => $rows[3],
+                    "status_dem"   => $rows[4],
+                    "code_cours"   => $rows[5],
+                    "prof_demand"  => $rows[6],
+                    "email_admin"  => $rows[7],
+                );
+            }
+
+            return json_encode($data);
+        }
+
+        return null;
+
+
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getMyCourseTable($conn)
+    {
+        mysqli_select_db($conn, 'db_21912824_2');
+        $code = $this->getCodeUser();
+
+        $query = "select DISTINCTROW pc.name_cours
+                from php_course pc, php_users pu1,php_groups pg, php_users pu2 
+                where pc.code_prof = '$code'
+                and pc.code_gp = pg.code_gp
+                and pg.code_sec = pu2.code_sec
+                and pu1.code_user = pc.code_prof
+                order by pc.dt_cours";
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $data[$rows[0]] = array();
+            }
+            $query = "select DISTINCTROW pc.name_cours,pc.type_cours
+                from php_course pc, php_users pu1,php_groups pg, php_users pu2 
+                where pc.code_prof = '$code'
+                and pc.code_gp = pg.code_gp
+                and pg.code_sec = pu2.code_sec
+                and pu1.code_user = pc.code_prof
+                order by pc.dt_cours";
+            $result = mysqli_query($conn, $query);
+
+            if ($result->num_rows > 0) {
+                $index = array_keys($data);
+                while ($rows = $result->fetch_row()) {
+                    foreach ($index as $value) {
+                        if ($rows[0] == $value) {
+                            $data[$value][$rows[1]] = array();
+                        }
+                    }
+                }
+
+            }
+            $query = " 
+            select DISTINCTROW pc.name_cours,pc.type_cours,pc.dt_cours,pc.code_cours
+            from php_course pc, php_users pu1,php_groups pg, php_users pu2 
+            where pc.code_prof = '$code'
+            and pc.code_gp = pg.code_gp
+            and pg.code_sec = pu2.code_sec
+            and pu1.code_user = pc.code_prof
+            order by pc.dt_cours";
+            $result = mysqli_query($conn, $query);
+
+            $index = array_keys($data);
+
+
+            while ($rows = $result->fetch_row()) {
+                foreach ($index as $value) {
+                    $index1 = array_keys($data[$value]);
+                    foreach ($index1 as $value2) {
+                        if ($rows[0] == $value and $rows[1] == $value2) {
+                            $data[$value][$value2][$rows[2]] = $rows[3];
+                        }
+                    }
+                }
+            }
+
+
+            return json_encode($data);
+        } else {
+            return null;
+        }
+    }
+
+    public function getMyCourseAdmin($conn)
+    {
+        mysqli_select_db($conn, 'db_21912824_2');
+        $code = $this->getCodeUser();
+
+        $query = "select DISTINCT  pc.name_cours
+                   from php_course pc, php_users pu1,php_groups pg, php_users pu2 
+                   where pc.code_prof = '$code'
+                     and pc.code_gp = pg.code_gp
+                     and pg.code_sec = pu2.code_sec
+                     and pu1.code_user = pc.code_prof
+                     order by pc.dt_cours";
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $g = $rows[0];
+                $data[$g] = array();
+            }
+
+            $query = "select DISTINCT  pc.name_cours, pu2.email_user
+                   from php_course pc, php_users pu1,php_groups pg, php_users pu2 
+                   where pc.code_prof = '$code'
+                     and pc.code_gp = pg.code_gp
+                     and pg.code_sec = pu2.code_sec
+                     and pu1.code_user = pc.code_prof
+                     order by pc.dt_cours";
+            $result = mysqli_query($conn, $query);
+            $index = array_keys($data);
+
+            while ($rows = $result->fetch_row()) {
+                foreach ($index as $value) {
+                    if ($rows[0] == $value) {
+                        $data[$value][] = $rows[1];
+                    }
+                }
+            }
+
+            return json_encode($data);
+        } else {
+            return null;
+        }
+
+
+    }
+
+    public function getMyCourse($conn)
+    {
+        mysqli_select_db($conn, 'db_21912824_2');
+        $code = $this->getCodeUser();
+
+        $query = "select DISTINCT  pc.name_cours
+                   from php_course pc, php_users pu1,php_groups pg, php_users pu2 
+                   where pc.code_prof = '$code'
+                     and pc.code_gp = pg.code_gp
+                     and pg.code_sec = pu2.code_sec
+                     and pu1.code_user = pc.code_prof
+                     order by pc.dt_cours";
+        $result = mysqli_query($conn, $query);
+        if ($result->num_rows > 0) {
+            while ($rows = $result->fetch_row()) {
+                $g = $rows[0];
+                $data[$g] = array();
+            }
+
+            return json_encode($data);
+        } else {
+            return null;
+        }
+
+
     }
 
 

@@ -145,6 +145,7 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
             <?php
             if ($person->getClass() != 3) {
                 echo "<li><a href='transfer_question.php' class='nav-link px-2 link-dark'>Transférer</a></li>";
+                echo "<li><a href='course_shifiting.php' class='nav-link px-2 link-dark'>Déplacement du Cours</a></li>";
             } ?>
             <li><a href='profil.php'
                    class='nav-link px-2 link-danger'>Profil</a>
@@ -250,7 +251,6 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
 
             }
             ?>
-
 
 
             <?php
