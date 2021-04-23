@@ -93,13 +93,10 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
 
 
         <div class='d-flex text-muted pt-3'>
-            <svg class='bd-placeholder-img flex-shrink-0 me-2 rounded'
-                 width='32' height='32' xmlns='http://www.w3.org/2000/svg'
-                 role='img' aria-label='Placeholder: 32x32'
-                 preserveAspectRatio='xMidYMid slice' focusable='false'><title>
-                    Placeholder</title>
-                <rect width='100%' height='100%' fill='#007bff'></rect>
-                <text x='50%' y='50%' fill='#007bff' dy='.3em'>32x32</text>
+            <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'
+                 fill='currentColor' class='bi bi-person-fill text-primary'
+                 viewBox='0 0 16 16'>
+                <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/>
             </svg>
             <p class='pb-3 mb-0 small lh-sm border-bottom text-dark'>
                 <strong class='d-block text-dark'><?php
@@ -120,13 +117,12 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
                     $content = $allResponses[$v]['content'];
                     echo "
              <div class='d-flex text-muted pt-3'>
-                <svg class='bd-placeholder-img flex-shrink-0 me-2 rounded' width='32' height='32' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: 32x32' preserveAspectRatio='xMidYMid slice' focusable='false'><title>Placeholder</title><rect width='100%' height='100%' fill='#007bff'></rect><text x='50%' y='50%' fill='#007bff' dy='.3em'>32x32</text></svg>
+                <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='currentColor' class='bi bi-person-fill text-primary' viewBox='0 0 16 16'><path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/></svg>
                 <p class='pb-3 mb-0 small lh-sm border-bottom text-dark'>
                 <strong class='d-block text-dark'>@$nameRes $numero </strong>
                 $content &nbsp; &nbsp;&nbsp; $dateTime
                 </p>
-            </div>
-             ";
+            </div>";
 
 
                 }
@@ -161,6 +157,9 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
                 }
                 ?>
             </form>
+
+
     </main>
 </body>
 </html>
+

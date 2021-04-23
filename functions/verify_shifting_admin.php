@@ -21,8 +21,10 @@ $person->setUserPara($conn, $_SESSION['username']);
 
 $status = $_POST['status_demand'];
 $code_dem = $_POST['code_dem'];
-$datetime_new = $_POST['dt_cours_new'];
-$code_cours = $_POST['code_cours'];
+if ($status == "Accepte") {
+    $datetime_new = $_POST['dt_cours_new'];
+    $code_cours = $_POST['code_cours'];
+}
 
 
 if ($status == "Accepte") {
@@ -34,16 +36,15 @@ if ($status == "Accepte") {
         echo "Soumission Success";
         $query
             = "update php_course set php_course.dt_cours = '$datetime_new' where php_course.code_cours = '$code_cours'";
-        echo "$datetime_new";
         $result = mysqli_query($conn, $query);
-//        echo "<script>
-//        setTimeout(function(){window.location.href='../course_shifiting.php';},2000);
-//       </script>";
+        echo "<script>
+        setTimeout(function(){window.location.href='../course_shifiting.php';},2000);
+       </script>";
     } else {
         echo "Soumission Echec";
-//        echo "<script>
-//        setTimeout(function(){window.location.href='../course_shifiting.php';},2000);
-//    </script>";
+        echo "<script>
+        setTimeout(function(){window.location.href='../course_shifiting.php';},2000);
+    </script>";
     }
 
 } else {

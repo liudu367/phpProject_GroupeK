@@ -46,7 +46,7 @@ $person->setUserPara($conn, $_SESSION['username']);
         }
     </script>
 </head>
-<body style="background-image: url('pic/unnamed.png'); height: 100vh; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; background-size: cover">
+<body>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <a href="#"

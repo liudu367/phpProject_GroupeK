@@ -128,7 +128,7 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
     <script src="./js/bootstrap.js"></script>
     <script src="./js/bootstrap.min.js"></script>
 </head>
-<body style="background-image: url('pic/unnamed.png'); height: 100vh; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; background-size: cover">
+<body>
 <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
         <a href="#"

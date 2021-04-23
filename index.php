@@ -28,7 +28,7 @@ $person->setUserPara($conn, $_SESSION['username']);
     <script src='./js/bootstrap.js'></script>
     <script src='./js/bootstrap.min.js'></script>
 </head>
-<body style="background-image: url('pic/unnamed.png'); height: 100vh; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; background-size: cover">
+<body>
 <!--the header of index page-->
 <div class='container'>
     <header class='d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom'>
