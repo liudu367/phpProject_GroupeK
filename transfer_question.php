@@ -13,10 +13,12 @@ use People\people;
 $person = new people();
 $person->setUserPara($conn, $_SESSION['username']);
 
-//Get arrays of my Question in charge
-if (json_decode($person->getMyCharge($conn), true) != null) {
-    $data2 = json_decode($person->getMyCharge($conn), true);
+//Get two-dimensional arrays of my Question in charge
+if (json_decode($person->getMyQuesInCharge($conn), true) != null) {
+    $data2 = json_decode($person->getMyQuesInCharge($conn), true);
     $index2 = array_keys($data2);
+
+//Decompose the two-dimensional array containing all the problems of the board into several one-dimensional arrays
 //column Code
     $codeArr2 = array();
     foreach ($data2 as $key => $value) {
@@ -67,9 +69,9 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
 </head>
 <body>
 <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center  justify-content-md-between py-3 mb-4">
+    <header class='d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom'>
         <a href="#"
-           class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+           class="d-flex align-items-center col-md-2 mb-2 mb-md-0  text-dark text-decoration-none">
             <img src="pic/logo-fr.jpg" height="75px" width="75px">
         </a>
 
@@ -83,7 +85,11 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
             if ($person->getClass() != 3) {
                 echo "<li><a href='transfer_question.php' class='nav-link px-2 link-danger'>Transférer</a></li>";
                 echo "<li><a href='course_shifiting.php' class='nav-link px-2 link-dark'>Déplacement du Cours</a></li>";
-            } ?>
+            }
+            if ($person->getClass() == 2) {
+                echo "<li><a href='page_statistiques.php' class='nav-link px-2 link-dark'>Statistiques</a></li>";
+            }
+            ?>
             <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a>
             </li>
         </ul>
@@ -91,8 +97,10 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
 
             <?php
             //the status of login
+            //if the password is set, there will be a navigate bar.
             if (isset($_SESSION['password'])) {
-                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "Bienvenue"." ".$person->getLastname()." "
+                    .$person->getFirstname();
                 echo " <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
                             </div>
                           </header>";
@@ -122,8 +130,8 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
                 <?php
                 if ($person->getClass() == 1 or $person->getClass() == 2) {
 
-                    //            Get my questions in Charge
-                    if (json_decode($person->getMyCharge($conn), true)
+                    //  Get my questions in Charge
+                    if (json_decode($person->getMyQuesInCharge($conn), true)
                         != null
                     ) {
                         $index2 = array_keys($data2);
@@ -146,11 +154,12 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
             <form  class='form-floating' method='get' action='functions/verify_transfer.php'>  
             <input type='number' name='code_cours' value='$codeArr2[$v2]' hidden>
             <select class='form-control-sm' ' name='email_transfer'>";
-
+                            //If the class equals 1, a list of all teachers will be displayed.
                             if ($person->getClass() == 1) {
                                 foreach ($listProf[$codeArr2[$v2]] as $value) {
                                     echo "<option  value='$value'>$value</option>";
                                 }
+                                //If the class equals 2, a list of all administrators will be displayed.
                             } elseif ($person->getClass() == 2) {
                                 foreach ($listAdmin as $value) {
                                     echo "<option value='$value'>$value</option>";
@@ -166,8 +175,6 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
 </svg></button>
             </div>
             </form>
-            
-            
         </div>";
                         }
                     }
@@ -177,7 +184,7 @@ if (json_decode($person->getMyCharge($conn), true) != null) {
 
             </div>
         </div>
-    </div>
+</div>
 </body>
 </html>
 

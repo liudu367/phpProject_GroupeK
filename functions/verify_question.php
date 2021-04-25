@@ -1,4 +1,5 @@
 <?php
+/* this page will verify the question and insertt the data of question into database*/
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Europe/Paris');
@@ -7,10 +8,12 @@ $conn = require_once('connection_db.php');
 
 use People\people;
 
-$title = $_POST['title_que'];
-$content = $_POST['content_que'];
-$namecourse = $_POST['name_cours'];
-$emailprof = $_POST['email_prof'];
+// get all the data from page 'question_page.php'
+$title = $_POST['title_que'];       # the title of question
+$content = $_POST['content_que'];   # the content of question
+$namecourse = $_POST['name_cours']; # the name of courser involved by question
+$emailprof
+    = $_POST['email_prof'];  # the email of professor in charge of question
 
 
 // set the new object $student
@@ -29,14 +32,16 @@ $status = 'ouvert';
 $uptime_que = date("Y-m-d H:i:s");
 
 
+//  set a SQL query in order to insert all data of question into table 'php_question'
 $query
-    = "insert into php_question values (NULL,'$title','$content',$code_user_res,'$status','$namecourse',$code_user,'$uptime_que')";
+    = "insert into php_question values (NULL,'$title','$content','$code_user_res','$status','$namecourse',$code_user,'$uptime_que', NULL)";
 mysqli_select_db($conn, 'db_21912824_2');
 
 
 if ($result = mysqli_query($conn, $query)) {
     echo "Soumission Success";
-//    Send the email to the professor
+
+//  if the query is executed successfully, the server will send the email to the professor
     $to = $emailprof;
     $subject = $title;
     $message = $content;
@@ -44,9 +49,11 @@ if ($result = mysqli_query($conn, $query)) {
         'Reply - To:'."$emailprof"."\r\n".
         'X - Mailer: PHP / '.phpversion();
     if (mail($to, $subject, $message, $headers) == true) {
+//      use the javascript function in order to get back to page "index.php"
         echo "<script>
         setTimeout(function(){window.location.href='../index.php';},2000);
     </script>";
+
     }
 } else {
     echo "Soumission echec ";

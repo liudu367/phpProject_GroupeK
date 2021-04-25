@@ -4,7 +4,7 @@
 <head>
     <meta charset='UTF-8'>
     <title>Help Desk Login</title>
-    <!--css/js file referencccces-->
+    <!--css/js file references-->
     <link rel='stylesheet' href='./css/bootstrap.css'>
     <link rel='stylesheet' href='./css/bootstrap.min.css'>
     <script src='./js/bootstrap.js'></script>
@@ -45,6 +45,7 @@
             <div class="w-100"></div>
             <div class="w-100"></div>
             <div class="w-100"></div>
+
             <!--section of authentication -->
             <div class='row'>
                 <div class='col'>
@@ -76,7 +77,6 @@
                 </div>
             </div>
 
-
             <div class='row justify-content-center'>
                 <div class='col-Sm-3'>
                     <input type='password' class='form-control text-danger'
@@ -85,6 +85,7 @@
                 </div>
             </div>
             <div class="w-100"></div>
+
             <!--section of button connect-->
             <div class='row justify-content-center'>
                 <div class='col-md-6'>

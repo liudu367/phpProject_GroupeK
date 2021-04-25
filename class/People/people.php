@@ -2,36 +2,53 @@
 
 namespace People;
 
+// First of all, it should be set a class People for users who ues the HelpDesk.
 class people
 {
+
+//    There are 6 properties
+    /*
+    $code  -> php_users.code_user     #Identity of Users
+    $class -> php_users.class_user    #1 = Professor ; 2 = Administrator ; 3 = Student
+    $password -> php_users.pwd_user   #password of Users
+    $email -> php_users.email_user    #E-mail of users
+    $firstname -> php_users.fn_user   #firstname of users
+    $lastname -> php_users.ln_user    #lastname of users
+
+    */
     protected $code;
     protected $class;
     protected $password;
     protected $email;
-    protected $prenom;
-    protected $nom;
+    protected $firstname;
+    protected $lastname;
 
-    public function getNom()
+
+// Function for getting lastname of user
+    public function getLastname()
     {
-        return $this->nom;
+        return $this->lastname;
     }
 
-    public function getPrenom()
+// Function for getting firstname of user
+    public function getFirstname()
     {
-        return $this->prenom;
+        return $this->firstname;
     }
 
+// Function for getting class of user
     public function getClass()
     {
-
         return $this->class;
     }
 
-    public function getFullname($conn, $codeuser)
+//  Function for getting full name of user
+    public function getFullname($conn, $code_user)
     {
         mysqli_select_db($conn, 'db_21912824_2');
+//  Putting the last name and first name together
         $query
-            = "select concat(pu.fn_user,' ',pu.ln_user) from php_users pu where code_user = $codeuser ";
+            = "select concat(pu.fn_user,' ',pu.ln_user) from php_users pu where code_user = $code_user ";
         $result = mysqli_query($conn, $query);
         while ($rows = $result->fetch_row()) {
             $name = $rows[0];
@@ -40,6 +57,7 @@ class people
         return $name;
     }
 
+//  Function for setting all properties
     public function setUserPara($conn, $username)
     {
         mysqli_select_db($conn, 'db_21912824_2');
@@ -52,20 +70,28 @@ class people
                 $this->class = $rows[1];
                 $this->password = $rows[2];
                 $this->email = $rows[3];
-                $this->prenom = $rows[4];
-                $this->nom = $rows[5];
+                $this->firstname = $rows[4];
+                $this->lastname = $rows[5];
             }
         }
     }
 
-    public function verifyPassword($conn, $username, $pwd)
+//    Function for verifying the password
+    /*
+    $conn -> connection of database;
+    $email_user -> email of users
+    $pwd -> password of users
+
+    */
+    public function verifyPassword($conn, $email_user, $pwd)
     {
         mysqli_select_db($conn, 'db_21912824_2');
         $query
-            = "select code_user, class_user, pwd_user, email_user, fn_user, ln_user from php_users  where email_user='$username'";
+            = "select code_user, class_user, pwd_user, email_user, fn_user, ln_user from php_users  where email_user='$email_user'";
         $result = mysqli_query($conn, $query);
         if ($result->num_rows > 0) {
             while ($rows = $result->fetch_row()) {
+//           Returns True if the password in the database matches the one entered, otherwise returns false.
                 if ($rows[2] == $pwd) {
                     return true;
                 } else {
@@ -78,6 +104,7 @@ class people
 
     }
 
+//    Function for getting the course
     public function getCourses($conn, $email)
     {
         mysqli_select_db($conn, 'db_21912824_2');
@@ -94,10 +121,10 @@ class people
         }
     }
 
+//    Function for getting JSON format data of all courses for students
     public function getCoursJson_stu($conn)
     {
         mysqli_select_db($conn, 'db_21912824_2');
-//        get all courses of this student
         $query = "select DISTINCT php_course.name_cours
                     from php_users,php_register,php_groups,php_course,php_users pu1
                     where php_users.code_user=php_register.code_user
@@ -159,6 +186,8 @@ class people
         return json_encode($data);
     }
 
+
+// Function for getting all questions in a thread
     public function getAllThreadQues($conn, $thread)
     {
         $query = "select pq.code_que,pq.title_que,concat(p1.fn_user,' ',p1.ln_user),concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que 
@@ -182,9 +211,9 @@ class people
         } else {
             return null;
         }
-
     }
 
+// Function for getting all student questions in a thread
     public function getStuThreadQues($conn, $thread)
     {
         $query = "select pq.code_que,pq.title_que,concat(p1.fn_user,' ',p1.ln_user),concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que 
@@ -213,6 +242,7 @@ class people
 
     }
 
+// Function for getting all the questions I asked
     public function getMyQuestions($conn)
     {
         $query = "select pq.code_que,pq.title_que,concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que 
@@ -238,7 +268,8 @@ class people
         }
     }
 
-    public function getMyParti($conn)
+//    Function to get all the questions I have participated in answering
+    public function getMyPartiQues($conn)
     {
         $query = "select DISTINCTROW pq.code_que,pq.title_que,concat(p1.fn_user,' ',p1.ln_user),concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que
                     from php_responses pr, php_question pq, php_users p1,php_users p2
@@ -266,7 +297,8 @@ class people
         }
     }
 
-    public function getMyCharge($conn)
+// Function to get all the questions that the user is responsible for answering
+    public function getMyQuesInCharge($conn)
     {
         $query = "select pq.code_que,pq.title_que,concat(p2.fn_user,' ',p2.ln_user), pq.status,pq.uptime_que 
                  from php_question pq, php_users p2 
@@ -291,7 +323,9 @@ class people
         }
     }
 
-    public function getAdminBlock($conn)
+
+// Function to get the administrator's thread
+    public function getAdminThread($conn)
     {
         mysqli_select_db($conn, 'db_21912824_2');
         $query
@@ -301,7 +335,6 @@ class people
             while ($rows = $result->fetch_row()) {
                 $data[] = $rows[0];
             }
-
         }
         $data[] = "Autres";
         $data[] = "La vie universitaire";
@@ -310,6 +343,7 @@ class people
         return json_encode($data);
     }
 
+//  Function to get a list of the types of questions teachers can ask and a list of the people involved
     public function getProfJson($conn)
     {
         mysqli_select_db($conn, 'db_21912824_2');
@@ -363,6 +397,8 @@ class people
 
     }
 
+
+//  Function to Get a list of all courses that can be delivered in json data format
     public function getTransferJson($conn, $codeQuesArr)
     {
         mysqli_select_db($conn, 'db_21912824_2');
@@ -395,6 +431,8 @@ class people
         return json_encode($data);
     }
 
+
+//  Function to Get the list of courses that all administrators can deliver in json data format
     public function getTransferAdminJson($conn)
     {
         mysqli_select_db($conn, 'db_21912824_2');
@@ -432,6 +470,8 @@ class people
         return json_encode($data);
     }
 
+
+//  function to get the professor's class schedule for view HTML
     public function getMyCourseTableHTML($conn)
     {
         $code = $this->getCodeUser();
@@ -462,11 +502,13 @@ class people
 
     }
 
+//   function to get the code of users
     public function getCodeUser()
     {
         return $this->code;
     }
 
+//    Function to get a list of replacement course requests from professors
     public function getMyDemandProf($conn)
     {
         $code = $this->getCodeUser();
@@ -493,6 +535,7 @@ class people
         return null;
     }
 
+//    Function to get the list of course requests to the administrator
     public function getMyDemandAdmin($conn)
     {
         $email = $this->getEmail();
@@ -522,10 +565,12 @@ class people
 
     }
 
+// function to get the email of user
     public function getEmail()
     {
         return $this->email;
     }
+
 
     public function getMyCourseTable($conn)
     {
@@ -587,7 +632,6 @@ class people
                     }
                 }
             }
-
 
             return json_encode($data);
         } else {

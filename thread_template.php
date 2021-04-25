@@ -9,6 +9,7 @@ use People\people;
 $person = new people();
 $person->setUserPara($conn, $_SESSION['username']);
 
+//Get thread name
 $thread = $_GET['thread'];
 $_SESSION['thread'] = $thread;
 
@@ -20,8 +21,11 @@ if ($person->getClass() == 1 or $person->getClass() == 2) {
         echo "il n'y a pas de question de"." ".$thread;
 
     } else {
+// Get a two-dimensional array '$data' of all questions in this section
         $data = json_decode($person->getAllThreadQues($conn, $thread), true);
+// GET all array keys of '$data'
         $index = array_keys($data);
+//Decompose the two-dimensional array containing all the problems of the board into several one-dimensional arrays
 //column Code
         $codeArr = array();
         foreach ($data as $key => $value) {
@@ -97,8 +101,6 @@ if ($person->getClass() == 1 or $person->getClass() == 2) {
             $updtArr[] = $value['update_time'];
         }
     }
-
-
 }
 
 
@@ -118,7 +120,7 @@ if ($person->getClass() == 1 or $person->getClass() == 2) {
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <a href="#"
-           class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+           class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none">
             <img src="pic/logo-fr.jpg" height="75px" width="75px">
         </a>
 
@@ -132,15 +134,22 @@ if ($person->getClass() == 1 or $person->getClass() == 2) {
             if ($person->getClass() != 3) {
                 echo "<li><a href='transfer_question.php' class='nav-link px-2 link-dark'>Transférer</a></li>";
                 echo "<li><a href='course_shifiting.php' class='nav-link px-2 link-dark'>Déplacement du Cours</a></li>";
-            } ?>
+            }
+            if ($person->getClass() == 2) {
+                echo "<li><a href='page_statistiques.php' class='nav-link px-2 link-dark'>Statistiques</a></li>";
+            }
+
+            ?>
             <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a>
             </li>
         </ul>
         <!--the bar of login-->
         <div class='col-md-3 text-end'>
             <?php
+            //           if the password is set, there will be a navigate bar.
             if (isset($_SESSION['password'])) {
-                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "Bienvenue"." ".$person->getLastname()." "
+                    .$person->getFirstname();
             }
             ?>
             <a href='functions/disconnection.php' style='color: white'>
@@ -175,6 +184,7 @@ if ($person->getClass() == 1 or $person->getClass() == 2) {
         and ($person->getClass() == 1 or $person->getClass() == 2)
     ) {
         foreach ($index as $v) {
+            //       Show all questions asked by all people
             echo "
         <div class='row row-cols-5 '>
             <div class='col-md-5'>
@@ -199,11 +209,13 @@ if ($person->getClass() == 1 or $person->getClass() == 2) {
 
         }
     } ?>
+
     <!--the view page model of student-->
     <?php
     if (json_decode($person->getStuThreadQues($conn, $thread), true) != null
         and $person->getClass() == 3
     ) {
+//       Show all questions asked by all students
         foreach ($index1 as $v) {
             echo "
         <div class='row row-cols-5 '>

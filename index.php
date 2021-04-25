@@ -33,7 +33,7 @@ $person->setUserPara($conn, $_SESSION['username']);
 <div class='container'>
     <header class='d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom'>
         <a href="#"
-           class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+           class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none">
             <img src="pic/logo-fr.jpg" height="75px" width="75px">
         </a>
 
@@ -47,7 +47,11 @@ $person->setUserPara($conn, $_SESSION['username']);
             if ($person->getClass() != 3) {
                 echo "<li><a href='transfer_question.php' class='nav-link px-2 link-dark'>Transférer</a></li>";
                 echo "<li><a href='course_shifiting.php' class='nav-link px-2 link-dark'>Déplacement du Cours</a></li>";
-            } ?>
+            }
+            if ($person->getClass() == 2) {
+                echo "<li><a href='page_statistiques.php' class='nav-link px-2 link-dark'>Statistiques</a></li>";
+            }
+            ?>
             <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a>
             </li>
         </ul>
@@ -57,7 +61,8 @@ $person->setUserPara($conn, $_SESSION['username']);
             <!--the thread block of student page-->
             <?php
             if (isset($_SESSION['password']) and $person->getClass() == 3) {
-                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "Bienvenue"." ".$person->getLastname()." "
+                    .$person->getFirstname();
                 echo "
                           <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
                         </div>
@@ -84,13 +89,12 @@ $person->setUserPara($conn, $_SESSION['username']);
                 }
             }
             ?>
-
-
             <!--the thread block of professor page-->
             <?php
             if (isset($_SESSION['password']) and ($person->getClass() == 1)
             ) {
-                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "Bienvenue"." ".$person->getLastname()." "
+                    .$person->getFirstname();
                 echo "
                           <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
                         </div>
@@ -117,7 +121,8 @@ $person->setUserPara($conn, $_SESSION['username']);
             <!-- the thread block of admin page-->
             <?php
             if (isset($_SESSION['password']) and ($person->getClass() == 2)) {
-                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "Bienvenue"." ".$person->getLastname()." "
+                    .$person->getFirstname();
                 echo "
                           <a href='functions/disconnection.php' style='color: white'><button type='button' class='btn btn-danger'>Déconnexion</button></a>
                         </div>
@@ -126,7 +131,7 @@ $person->setUserPara($conn, $_SESSION['username']);
                       <h2 class='pb-2 text-danger' > Fils de Discussion </h2 >
                            <div class='row row-cols-4 g-4 py-5' >
                       ";
-                $data = json_decode($person->getAdminBlock($conn), true);
+                $data = json_decode($person->getAdminThread($conn), true);
                 foreach ($data as $v) {
                     echo "
             <div class='col d-flex align-items-start'>

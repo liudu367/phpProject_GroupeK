@@ -1,4 +1,5 @@
 <?php
+/* this page will verify the reply of question, and insert data into database */
 session_start();
 header("Content-Type: text/html; charset=utf-8");
 date_default_timezone_set('Europe/Paris');
@@ -8,16 +9,19 @@ $conn = require_once("./connection_db.php");
 
 use People\people;
 
+// set the new object $person
 $person = new people();
 $person->setUserPara($conn, $_SESSION["username"]);
+// get the user code and the user class
 $code_user = $person->getCodeUser();
 $class = $person->getClass();
 
+// get the content of the reply and the question code involved by reply
 $content_re = $_POST['content_re'];
 $code_que = $_POST['code_que'];
 $dt_re = date("Y-m-d H:i:s");
 
-
+// set a SQL query in order to insert the response data into table 'php_responses'
 $query
     = "insert into php_responses (code_re, title_re, content_re, dt_re, father_id, code_que, code_user, uptime_re) values (NULL,NULL,'$content_re','$dt_re',NULL,'$code_que','$code_user','$dt_re')";
 mysqli_select_db($conn, "db_21912824_2");
@@ -25,6 +29,12 @@ if ($result = mysqli_query($conn, $query)) {
     $from = $person->getEmail();
     $subject = "Réponse";
     $message = $content_re;
+
+    /*if the Responder's class is 1 or 2 ( professor or administrator),
+     it will insert data into database and  send the email to the author of
+    question involved by the reply.
+    Else it will insert data into database.
+    */
     if ($class == 3) {
         echo "Soumission Success";
         echo "<script>

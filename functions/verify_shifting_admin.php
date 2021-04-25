@@ -1,4 +1,5 @@
 <?php
+/* this page will verify the command of administrator of the courser shifting demand*/
 //start the session of user
 session_start();
 header('Content-Type: text/html; charset=utf-8');
@@ -18,15 +19,20 @@ use People\people;
 $person = new people();
 $person->setUserPara($conn, $_SESSION['username']);
 
-
+//  Get the status and the code of this command
 $status = $_POST['status_demand'];
 $code_dem = $_POST['code_dem'];
+
+// if the status is "Accepte", it will set the datetime and course code
 if ($status == "Accepte") {
     $datetime_new = $_POST['dt_cours_new'];
     $code_cours = $_POST['code_cours'];
 }
 
-
+/* if the status is "Accepte", it will set a SQL query in order to update data
+   in table "php_demand" and update "dt_cours" in php_course.
+   Else, it will set a SQL query in order to update data in table "php_demand"
+ */
 if ($status == "Accepte") {
     $query
         = "update php_demand set php_demand.status_dem ='$status' where php_demand.code_dem ='$code_dem'";
@@ -51,7 +57,6 @@ if ($status == "Accepte") {
     $query
         = "update php_demand set php_demand.status_dem ='$status' where php_demand.code_dem ='$code_dem'";
     mysqli_select_db($conn, 'db_21912824_2');
-
     if ($result = mysqli_query($conn, $query)) {
         echo "Soumission Success";
         echo "<script>
@@ -81,8 +86,6 @@ if ($status == "Refuse") {
         setTimeout(function(){window.location.href='../course_shifiting.php';},2000);
     </script>";
     }
-
-
 }
 
 

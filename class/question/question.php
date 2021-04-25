@@ -2,7 +2,17 @@
 
 namespace question;
 
-
+/*
+ * $code_que -> php_question.code_que               #Identity of question
+ * $title_que -> php_question.title_que             #Title of question
+ * $content_que -> php_question.content_que         #Content of question
+ * $code_user_res -> php_question.code_user_res     #Identity of responsible user
+ * $status -> php_question.status                   #Status of question : Ouvert = Opened, Fermée = Closes, Résoulu = Resolved
+ * $name_cours -> php_question.name_cours           #Name of course covered by the question
+ * $code_user -> php_question.code_user             #Identity of Questioner
+ * $uptime_ques -> php_question.uptime_que          #Update time of question
+ * $closetime_que -> php_question.closetime_que     #Closed time of question
+ * */
 class question
 {
     protected $code_que;
@@ -13,8 +23,9 @@ class question
     protected $name_cours;
     protected $code_user;
     protected $uptime_ques;
+    protected $closetime_que;
 
-
+// function to get all properties of question
     public function getAll()
     {
         $data[] = $this->code_que;
@@ -29,7 +40,7 @@ class question
         return $data;
     }
 
-
+// function to set all properties of question
     public function setAll($conn, $code_que)
     {
         mysqli_select_db($conn, 'db_21912824_2');
@@ -48,7 +59,7 @@ class question
         }
     }
 
-
+// function to get all answers of question
     public function getAllResponses($conn)
     {
         mysqli_select_db($conn, 'db_21912824_2');

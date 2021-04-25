@@ -50,7 +50,7 @@ $person->setUserPara($conn, $_SESSION['username']);
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <a href="#"
-           class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+           class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none">
             <img src="pic/logo-fr.jpg" height="75px" width="75px">
         </a>
 
@@ -64,7 +64,11 @@ $person->setUserPara($conn, $_SESSION['username']);
             if ($person->getClass() != 3) {
                 echo "<li><a href='transfer_question.php' class='nav-link px-2 link-dark'>Transférer</a></li>";
                 echo "<li><a href='course_shifiting.php' class='nav-link px-2 link-dark'>Déplacement du Cours</a></li>";
-            } ?>
+            }
+            if ($person->getClass() == 2) {
+                echo "<li><a href='page_statistiques.php' class='nav-link px-2 link-dark'>Statistiques</a></li>";
+            }
+            ?>
             <li><a href='profil.php' class='nav-link px-2 link-dark'>Profil</a>
             </li>
         </ul>
@@ -72,7 +76,8 @@ $person->setUserPara($conn, $_SESSION['username']);
         <div class='col-md-3 text-end'>
             <?php
             if (isset($_SESSION['password'])) {
-                echo "Bienvenue"." ".$person->getNom()." ".$person->getPrenom();
+                echo "Bienvenue"." ".$person->getLastname()." "
+                    .$person->getFirstname();
             }
             ?>
             <a href='functions/disconnection.php' style='color: white'>
@@ -128,6 +133,7 @@ $person->setUserPara($conn, $_SESSION['username']);
 
 
                                 <?php
+                                // Show people students can ask questions
                                 if ($person->getClass() == 3) {
                                     $index
                                         = array_keys(json_decode($person->getCoursJson_stu($conn),
@@ -137,7 +143,7 @@ $person->setUserPara($conn, $_SESSION['username']);
                                             ."</option>";
                                     }
                                 }
-
+                                // Show people professors can ask questions
                                 if ($person->getClass() == 1) {
                                     $index1
                                         = array_keys(json_decode($person->getProfJson($conn),
@@ -170,6 +176,7 @@ $person->setUserPara($conn, $_SESSION['username']);
                         <hr class="my-4">
 
                         <?php
+                        //If the user is an administrator, then the user will not be able to ask questions.
                         if ($person->getClass() == 2) {
                             echo "vous n'avez pas le droit à poser des questions";
 
