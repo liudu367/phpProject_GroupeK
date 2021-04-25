@@ -48,7 +48,7 @@ if (mysqli_query($conn, $query)) {
         'X - Mailer: PHP / '.phpversion();
     if (mail($to, $subject, $message, $headers) == true) {
         echo "<script>
-        setTimeout(function(){window.location.href='../index.php';},2000);
+        setTimeout(function(){window.location.href='../transfer_question.php';},2000);
     </script>";
     }
 } else {

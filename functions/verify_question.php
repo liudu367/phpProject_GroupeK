@@ -16,6 +16,16 @@ $emailprof
     = $_POST['email_prof'];  # the email of professor in charge of question
 
 
+if (isset($title) == false or isset($content) == false or isset($emailprof)
+    == false or isset($namecourse) == false
+) {
+    echo "ECHEC";
+    echo "<script>
+        setTimeout(function(){window.location.href='../question_page.php';},2000);
+    </script>";
+}
+
+
 // set the new object $student
 $student = new people();
 $student->setUserPara($conn, $_SESSION['username']);
