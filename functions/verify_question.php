@@ -38,7 +38,7 @@ $professor->setUserPara($conn, $emailprof);
 $code_user_res = $professor->getCodeUser();
 
 // set the default value of the question status and the update time
-$status = 'ouvert';
+$status = 'Ouvert';
 $uptime_que = date("Y-m-d H:i:s");
 
 

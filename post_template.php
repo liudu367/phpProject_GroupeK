@@ -86,9 +86,9 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
         <div class="row">
             <div class="col-sm">
                 <?php
-                if ($questionAll[4] == 'ouvert') {
+                if ($questionAll[4] == 'Ouvert') {
                     echo "<span class='badge bg-primary rounded-pill'>$questionAll[4]</span>";
-                } elseif ($questionAll[4] == 'Résoulu') {
+                } elseif ($questionAll[4] == 'Résolu') {
                     echo "<span class='badge bg-success rounded-pill'>$questionAll[4]</span>";
                 } else {
                     echo "<span class='badge bg-danger rounded-pill'>$questionAll[4]</span>";
@@ -154,10 +154,10 @@ if (json_decode($question->getAllResponses($conn), true) != null) {
                 echo $person->getCodeUser(); ?>' hidden>
 
                 <?php
-                //If the status of the question is 'Ouvert' or 'Résoulu', the user can answer the question
+                //If the status of the question is 'Ouvert' or 'Résolu', the user can answer the question
                 //Else the user can't answer the question.
                 if ($questionAll[4] == 'Ouvert' or $questionAll[4]
-                    == 'Résoulu'
+                    == 'Résolu'
                 ) {
                     echo "<div class='d-flex text-muted pt-2'>
                     <input class='btn btn-danger' type='submit'

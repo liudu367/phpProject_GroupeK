@@ -213,7 +213,7 @@ if (json_decode($person->getMyQuesInCharge($conn), true) != null) {
             </div>";
                         if ($staArr[$v] != 'Fermée') {
                             echo "<div class='col-md-1'>
-                <a class='btn-sm btn-success text-decoration-none' href='functions/close_open_question.php?code_que=$codeArr[$v]&status=Résoulu' >Résoulu</a>
+                <a class='btn-sm btn-success text-decoration-none' href='functions/close_open_question.php?code_que=$codeArr[$v]&status=Résolu' >Résolu</a>
                      </div>";
 
                         } else {
