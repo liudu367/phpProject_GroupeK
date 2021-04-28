@@ -453,67 +453,71 @@ $person->setUserPara($conn, $_SESSION['username']);
 
             $demandRespTab = json_decode($person->getMyDemandAdmin($conn),
                 true);
-            $index = array_keys($demandRespTab);
-            foreach ($index as $value) {
-                echo "<div class='row row-cols-7 '>
+            if ($demandRespTab != null) {
+                $index = array_keys($demandRespTab);
+                foreach ($index as $value) {
+                    echo "<div class='row row-cols-7 '>
                         <div class='col-md-2 text-danger text-center'>";
-                echo $demandRespTab[$value]["code_dem"];
-                echo "</div>";
+                    echo $demandRespTab[$value]["code_dem"];
+                    echo "</div>";
 
-                echo "<div class='col-md-2 text-center'>";
-                echo $demandRespTab[$value]["dt_cours_org"];
-                echo "</div>";
+                    echo "<div class='col-md-2 text-center'>";
+                    echo $demandRespTab[$value]["dt_cours_org"];
+                    echo "</div>";
 
-                echo "<div class='col-md-2 text-center'>";
-                echo $demandRespTab[$value]["dt_cours_new"];
-                echo "</div>";
+                    echo "<div class='col-md-2 text-center'>";
+                    echo $demandRespTab[$value]["dt_cours_new"];
+                    echo "</div>";
 
-                echo "<div class='col-md-1 text-center'>";
-                echo $demandRespTab[$value]["status_dem"];
-                echo "</div>";
+                    echo "<div class='col-md-1 text-center'>";
+                    echo $demandRespTab[$value]["status_dem"];
+                    echo "</div>";
 
-                echo "<div class='col-md-1 text-center'>";
-                echo $demandRespTab[$value]["code_cours"];
-                echo "</div>";
+                    echo "<div class='col-md-1 text-center'>";
+                    echo $demandRespTab[$value]["code_cours"];
+                    echo "</div>";
 
-                echo "<div class='col-md-2 text-center'>";
-                echo $demandRespTab[$value]["email_admin"];
-                echo "</div>";
-
-
-                $code_dem = $demandRespTab[$value]["code_dem"];
-                $datetime_new = $demandRespTab[$value]["dt_cours_new"];
-                $code_cours = $demandRespTab[$value]["code_cours"];
-                $status_dem = $demandRespTab[$value]['status_dem'];
+                    echo "<div class='col-md-2 text-center'>";
+                    echo $demandRespTab[$value]["email_admin"];
+                    echo "</div>";
 
 
-                if ($status_dem != 'Refuse'
-                    and $demandRespTab[$value]["status_dem"] != 'Accepte'
-                ) {
-                    echo "<div class='col-md-1'>";
-                    echo "<form class='col-md-1' method='post' action='functions/verify_shifting_admin.php'>
+                    $code_dem = $demandRespTab[$value]["code_dem"];
+                    $datetime_new = $demandRespTab[$value]["dt_cours_new"];
+                    $code_cours = $demandRespTab[$value]["code_cours"];
+                    $status_dem = $demandRespTab[$value]['status_dem'];
+
+
+                    if ($status_dem != 'Refuse'
+                        and $demandRespTab[$value]["status_dem"] != 'Accepte'
+                    ) {
+                        echo "<div class='col-md-1'>";
+                        echo "<form class='col-md-1' method='post' action='functions/verify_shifting_admin.php'>
                           <input hidden name='dt_cours_new' type='text' value='$datetime_new'>
                           <input hidden name='code_cours' type='number' value='$code_cours'>
                           <input hidden name='code_dem' type='number' value='$code_dem'>
                           <input hidden name='status_demand' type='text' value='Accepte'>
                           <input  class='btn btn-danger' type='submit'  value='Accepte'>
                       </form>";
-                    echo "</div>";
+                        echo "</div>";
 
-                    echo "<div class='col-md-1'>";
-                    echo "<form class='col-md-1' method='post' action='functions/verify_shifting_admin.php'>
+                        echo "<div class='col-md-1'>";
+                        echo "<form class='col-md-1' method='post' action='functions/verify_shifting_admin.php'>
                            <input hidden name='code_dem' type='number' value='$code_dem'>
                           <input hidden name='status_demand' type='text' value='Refuse'>
                           <input class='btn btn-primary'   type='submit'  value='Refuse'>
                       </form>";
-                    echo "</div>";
+                        echo "</div>";
 
-                } else {
-                    echo "<div class='col-md-2 text-center'>
+                    } else {
+                        echo "<div class='col-md-2 text-center'>
                         Vous avez déjà choisi.
                         </div>";
+                    }
+                    echo "</div>";
+
                 }
-                echo "</div>";
+
 
             }
 
